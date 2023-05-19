@@ -22,8 +22,8 @@ public class UserController {
         return new ResponseEntity<>(userService.insertUser(user), HttpStatus.CREATED);
     }
 
-    @PostMapping("/editUser/{user}")
-    public ResponseEntity<User> editUser(@RequestBody @PathVariable User userNew, @RequestBody @PathVariable int id) {
-        return new ResponseEntity<>(userService.editUser(userNew, id), HttpStatus.CREATED);
-    }
+//    @PostMapping("/editUser/{user}")
+//    public ResponseEntity<User> editUser(@RequestBody @PathVariable User userNew, @RequestBody @PathVariable int id) {
+//        return new ResponseEntity<>(userService.editUser(userNew, id), HttpStatus.CREATED);
+//    }
 }
