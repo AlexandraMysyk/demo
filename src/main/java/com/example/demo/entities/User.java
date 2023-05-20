@@ -38,4 +38,82 @@ public class User implements Serializable {
         this.id_user = id_user;
     }
 
+    public User(int id_user, String name, String password, String email, PersonalDictionary personalDictionary, List<Task> taskList, List<Text> textList) {
+        this.id_user = id_user;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.personalDictionary = personalDictionary;
+        this.taskList = taskList;
+        this.textList = textList;
+    }
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public PersonalDictionary getPersonalDictionary() {
+        return personalDictionary;
+    }
+
+    public void setPersonalDictionary(PersonalDictionary personalDictionary) {
+        this.personalDictionary = personalDictionary;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    public List<Text> getTextList() {
+        return textList;
+    }
+
+    public void setTextList(List<Text> textList) {
+        this.textList = textList;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id_user=" + id_user +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", personalDictionary=" + personalDictionary +
+                ", taskList=" + taskList +
+                ", textList=" + textList +
+                '}';
+    }
 }

@@ -21,23 +21,23 @@ public class TextController {
         this.textService = textService;
     }
 
-    @GetMapping("/getText/{id}")
+    @GetMapping(path="/getText/{id}",produces = "text/json")
     public ResponseEntity<Text> getTextById(@PathVariable int id) {
         return new ResponseEntity<>(textService.getTextDao(id), HttpStatus.OK);
     }
 
-    @GetMapping("/getTextsByLevel/{level}")
+    @GetMapping(path="/getTextsByLevel/{level}",produces = "textById/json")
     public ResponseEntity<List<Text>> getTextsByLevel(@PathVariable String level) {
         return new ResponseEntity<>(textService.getAllByLevel(level), HttpStatus.OK);
     }
 
-    @PostMapping("/add/{text}")
-    public ResponseEntity<Text> addText(@RequestBody @PathVariable Text text) {
+    @PostMapping(path = "/addText",consumes = "text/json")
+    public ResponseEntity<Text> addText(@RequestBody  Text text) {
         return new ResponseEntity<>(textService.insertText(text), HttpStatus.CREATED);
     }
 
-    @PostMapping("/edit/{text}")
-    public ResponseEntity<Text> editText(@RequestBody @PathVariable Text text, @RequestBody String content) {
+    @PostMapping(path="/editText",consumes="text/json")
+    public ResponseEntity<Text> editText(@RequestBody Text text, @RequestBody String content) {
         return new ResponseEntity<>(textService.updateText(text, content), HttpStatus.OK);
     }
 }

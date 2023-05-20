@@ -27,10 +27,10 @@ public class UserService {
         return userDao.save(user);
     }
 
-//    @Transactional
-//    public User editUser(User user, int id) {
-//        return userDao.editUserByid(user.getName(), user.getEmail(), user.getPassword(), id);
-//    }
+    @Transactional
+    public User editUser(User user, int id) {
+        return userDao.editUserByid(user.getName(), user.getEmail(), user.getPassword(), id);
+    }
 
     @Transactional
     public void deleteUser(User user) {

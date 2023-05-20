@@ -5,10 +5,7 @@ import com.example.demo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +19,12 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/getTasksByLevel/{level}")
-    public ResponseEntity<List<Task>> getTextsByLevel(@PathVariable String level) {
+    @GetMapping(path="/getTasksByLevel/{level}", produces = "taskbylevel/json")
+    public ResponseEntity<List<Task>> getTasksByLevel(@PathVariable String level) {
         return new ResponseEntity<>(taskService.getAllByLevel(level), HttpStatus.OK);
+    }
+    @PostMapping(path = "/addTask/", produces = "newtask/json")
+    public ResponseEntity<Task> addTask(@RequestBody @PathVariable Task task) {
+        return new ResponseEntity<>(taskService.insertTask(task), HttpStatus.CREATED);
     }
 }
