@@ -6,11 +6,20 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class User extends Admin implements Serializable {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private int id_user;
+    //
+//    private String name;
+//
+//    private String password;
+//
+//    private String email;
+//    @OneToMany
+//    @JoinColumn(name = "admin")
+//    private List<Text> textList;
 //    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 //    private PersonalDictionary personalDictionary;
 //    @ManyToMany
