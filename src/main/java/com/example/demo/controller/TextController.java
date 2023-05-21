@@ -36,7 +36,7 @@ public class TextController {
         return new ResponseEntity<>(textService.insertText(text), HttpStatus.CREATED);
     }
 
-    @PostMapping(path="/editText",consumes="text/json")
+    @PutMapping(path="/editText",consumes="text/json")
     public ResponseEntity<Text> editText(@RequestBody Text text, @RequestBody String content) {
         return new ResponseEntity<>(textService.updateText(text, content), HttpStatus.OK);
     }
