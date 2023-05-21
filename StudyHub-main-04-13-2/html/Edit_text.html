@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add text</title>
+	<link rel="stylesheet" type="text/css" href="../css/Add_text.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<script src="../scripts/script.js"></script>
+</head>
+<body>
+	<header>
+		<ul class="tab-container">
+			<li><a href="Add_text.html">Add Text</a></li>
+			<li><a href="List_of_texts.html">List of texts</a></li>
+		</ul>
+	</header>
+	<h1>Edit Text</h1>
+	<form class="form-container">
+		<label for="text-name">Text Name:</label>
+		<input type="text" id="text-name" name="text-name" required minlength="3">
+
+		<label for="text-level">Text Level:</label>
+      <select id="text-level" name="text-level" required>
+        <option value="">--Select--</option>
+        <option value="beginner">Beginner</option>
+        <option value="pre-intermediate">Pre Intermediate</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="upper-intermediate">Upper Intermediate</option>
+        <option value="advanced">Advanced</option>
+        <option value="profficiency">Profficiency</option>
+      </select>
+
+		<label for="text">Text:</label>
+		<textarea id="text" name="text" required minlength="50"></textarea>
+
+		<div class="buttons">
+			<button type="submit" id="confirm-btn" onclick="editText()">Confirm</button>
+			<button type="button" id="cancel-btn" onclick="fillForm()">Cancel</button>
+			<button type="button" id="go-to-list" onclick="open_list_text()">Return to list</button>
+		</div>
+	</form>
+	<script>
+		fillForm();
+	  </script>
+</body>
+</html>

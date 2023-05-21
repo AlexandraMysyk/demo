@@ -1,0 +1,29 @@
+body {
+    background-color: #f4e8ff;
+    color: #4b0082;
+  }
+  
+  input[type="text"],
+  button {
+    background-color: #ffffff;
+    color: #4b0082;
+    border: 2px solid #4b0082;
+    padding: 8px;
+    margin-right: 16px;
+  }
+  
+  button:hover {
+    background-color: #4b0082;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  #error {
+    color: red;
+    font-weight: bold;
+  }
+  
+  h1 {
+    color: #4b0082;
+    margin-bottom: 8px;
+  }

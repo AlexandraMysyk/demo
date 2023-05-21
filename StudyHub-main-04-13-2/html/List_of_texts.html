@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>List of texts</title>
+	<link rel="stylesheet" href="../css/style.css">
+	<script src="../scripts/script.js"></script>
+</head>
+<body>
+	<div id="select_text" class="popup">
+		<div class="popup-content">
+		  <span class="close">&times;</span>
+		  <h2>Select the text</h2>
+		</div>
+	  </div>
+	  <div id="delete_text" class="popup">
+		<div class="popup-content">
+		  <span class="close"> </span>
+		  <h2>Are you sure you want to delete the text?</h2>
+		  <div class="buttons">
+				<button class="confirm-btn" onclick="deleteText()">Confirm</button>
+				<button class="cancel-btn" onclick="open_list_text()">Cancel</button>
+		</div>
+		</div>
+	  </div>
+	<header>
+		<ul class="tab-container">
+			<li><a href="Add_text.html">Add Text</a></li>
+			<li><a class="active" href="List_of_texts.html">List of texts</a></li>
+		</ul>
+	</header>
+    <h1>List of texts</h1>
+	<form class="form-container">
+		<ul id="text-list">
+			<li><input type="radio" name="text-item">Text Text Text Text</li>
+			<li><input type="radio" name="text-item">Text2</li>
+			<li><input type="radio" name="text-item">Text 5</li>
+		</ul>
+		<div class="buttons">
+            <button type="button" class="delete-btn" onclick="handleDeleteButtonClick()">Delete</button>
+            <button type="button" id="editButton" onclick="handleEditButtonClick()">Edit</button>
+		</div>
+	</form>
+
+</body>
+</html> 

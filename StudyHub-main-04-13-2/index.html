@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Dictionary</title>
+  </head>
+  <body>
+    <div>
+      <label for="word">Enter a word:</label>
+      <input type="text" id="word" />
+      <button id="search">Search</button>
+      <button id="get-data">Отримати дані</button>
+    </div>
+    <div id="result"></div>
+    <script>
+      $(document).ready(function() {
+        $('#get-data').click(function() {
+          $.ajax({
+            type: 'GET',
+            url: '/api/select-from-text',
+            success: function(data) {
+              console.log('Отримані дані:', data);
+            },
+            error: function(xhr, status, error) {
+              console.log('Сталася помилка:', error);
+            }
+          });
+        });
+      });
+
+      const url = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+      const result = document.getElementById("result");
+      const btn = document.getElementById("search");
+      const langFrom = "en";
+      const langTo = "uk";
+      btn.addEventListener("click", () => {
+        let word = document.getElementById("word").value;
+        fetch(`${url}${word}`)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            result.innerHTML = `
+            <h1>Word: ${word}</h1>
+            <h1>Meaning: ${data[0].meanings[0].definitions[0].definition}</h1>
+            `;
+          })
+          .catch(() => {
+            result.innerHTML = `<p class="error">Couldn't Find The Word</p>`;
+          });
+        if (!word) {
+          return;
+        }
+
+        const apiUrl = `https://api.mymemory.translated.net/get?q=${word}&langpair=${langFrom}|${langTo}`;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            const translatedText = data.responseData.translatedText;
+            result.innerHTML += `
+              <h1>Translation: ${translatedText}</h1>`;
+          })
+          .catch((error) => console.error(error));
+      });
+    </script>
+  </body>
+</html>

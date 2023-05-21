@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Profile</title>
+	<link rel="stylesheet" type="text/css" href="../css/Profile.css">
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+	<header>
+		<ul class="tab-container">
+			<li><a href="Texts.html">Texts</a></li>
+			<li><a href="Tasks.html">Tasks</a></li>
+			<li><a href="Dictionary.html">Personal dictionary</a></li>
+			<li><a class="active" href="Profile.html">Profile</a></li>
+	</header>
+	<h1>Profile</h1>
+	<form class="form-container">
+			<label >Send me a reminder:</label>
+			<input type="radio" name="reminder" value="yes" id="reminder-yes">Yes
+			<input type="radio" name="reminder" value="no" id="reminder-no" checked>No
+			<br><br>
+
+		  	<div class="frequency">
+				<label>Frequency:</label>
+				<input type="radio" name="frequency" value="once">Once a day
+				<input type="radio" name="frequency" value="twice" >Twice a day
+				<input type="radio" name="frequency" value="three" >Three times a day
+				<br><br>
+				<label for="start-time">Start time:</label>
+				<input type="time" id="start-time" name="start-time" min="00:00" max="23:59">
+				<br><br>
+				<label for="end-time">End time:</label>
+				<input type="time" id="end-time" name="end-time" min="00:00" max="23:59">
+				<br><br>
+		 
+			</div>
+		</div>
+		<button type="submit">Save</button>
+	</form>
+</body>
+</html>
