@@ -15,12 +15,12 @@ public class Text implements Serializable {
 
     private String complexityLevel;
     @ManyToOne
-    @JoinColumn(name = "id_admin",nullable = false)
+    @JoinColumn(name = "id_admin", nullable = false)
     private Admin admin;
     @ManyToMany
     @JoinTable(name = "TextToUser",
-            joinColumns = {@JoinColumn(name="id_text")},
-            inverseJoinColumns = {@JoinColumn(name="id_user")})
+            joinColumns = {@JoinColumn(name = "id_text")},
+            inverseJoinColumns = {@JoinColumn(name = "id_user")})
     private List<User> user;
 
     public Text() {
@@ -29,6 +29,7 @@ public class Text implements Serializable {
     public Text(int id_text) {
         this.id_text = id_text;
     }
+
     public Text(int id, String content, String complexityLevel, Admin admin, List<User> user) {
         this.id_text = id;
         this.content = content;

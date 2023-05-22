@@ -13,8 +13,8 @@ public class PersonalDictionary implements Serializable {
     private int id_pd;
     @ManyToMany
     @JoinTable(name = "WordToDictionary",
-    joinColumns = {@JoinColumn(name="id_pd")},
-            inverseJoinColumns = {@JoinColumn(name="id_word")}
+            joinColumns = {@JoinColumn(name = "id_pd")},
+            inverseJoinColumns = {@JoinColumn(name = "id_word")}
     )
     private List<Word> wordList;
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)

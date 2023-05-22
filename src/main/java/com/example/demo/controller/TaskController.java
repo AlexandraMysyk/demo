@@ -19,10 +19,11 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping(path="/getTasksByLevel/{level}", produces = "taskbylevel/json")
+    @GetMapping(path = "/getTasksByLevel/{level}", produces = "taskbylevel/json")
     public ResponseEntity<List<Task>> getTasksByLevel(@PathVariable String level) {
         return new ResponseEntity<>(taskService.getAllByLevel(level), HttpStatus.OK);
     }
+
     @PostMapping(path = "/addTask/", produces = "newtask/json")
     public ResponseEntity<Task> addTask(@RequestBody @PathVariable Task task) {
         return new ResponseEntity<>(taskService.insertTask(task), HttpStatus.CREATED);

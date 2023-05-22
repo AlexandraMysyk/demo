@@ -14,6 +14,7 @@ public interface TextDao extends JpaRepository<Text, Integer> {
 
     @Query(value = "UPDATE ? SET content=?", nativeQuery = true)
     Text updateText(Text text, String content);
-    @Query(value="SELECT * FROM text WHERE id_text=?1",nativeQuery = true)
+
+    @Query(value = "SELECT * FROM text WHERE id_text=?1", nativeQuery = true)
     Text findById(int id);
 }

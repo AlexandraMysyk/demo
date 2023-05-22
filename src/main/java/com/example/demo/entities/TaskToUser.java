@@ -25,7 +25,8 @@ public class TaskToUser implements Serializable {
     public TaskToUser(int id_task) {
         this.id_task = id_task;
     }
-        public TaskToUser(int id, String content, int mark, User user, Task task) {
+
+    public TaskToUser(int id, String content, int mark, User user, Task task) {
         this.id_task = id;
         this.content = content;
         this.mark = mark;

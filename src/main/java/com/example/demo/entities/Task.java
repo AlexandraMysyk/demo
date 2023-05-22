@@ -19,12 +19,12 @@ public class Task implements Serializable {
 
     private String complexityLevel;
     @ManyToOne
-    @JoinColumn(name = "id_kot",nullable = false)
+    @JoinColumn(name = "id_kot", nullable = false)
     private KindOfTask kindOfTask;
     @ManyToMany
     @JoinTable(name = "TaskToUser",
-            joinColumns = {@JoinColumn(name="id_task")},
-            inverseJoinColumns = {@JoinColumn(name="id_user")})
+            joinColumns = {@JoinColumn(name = "id_task")},
+            inverseJoinColumns = {@JoinColumn(name = "id_user")})
     private List<User> userList;
 
     public Task() {
@@ -34,7 +34,7 @@ public class Task implements Serializable {
         this.id_task = id_task;
     }
 
-        public Task(int id, String taskContent, String answer, String complexityLevel, KindOfTask kindOfTask) {
+    public Task(int id, String taskContent, String answer, String complexityLevel, KindOfTask kindOfTask) {
         this.id_task = id;
         this.taskContent = taskContent;
         this.answer = answer;

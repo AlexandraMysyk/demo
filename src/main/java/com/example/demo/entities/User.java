@@ -22,13 +22,13 @@ public class User implements Serializable {
     private PersonalDictionary personalDictionary;
     @ManyToMany
     @JoinTable(name = "TaskToUser",
-            joinColumns = {@JoinColumn(name="id_user")},
-            inverseJoinColumns = {@JoinColumn(name="id_task")})
+            joinColumns = {@JoinColumn(name = "id_user")},
+            inverseJoinColumns = {@JoinColumn(name = "id_task")})
     private List<Task> taskList;
     @ManyToMany
     @JoinTable(name = "TextToUser",
-            joinColumns = {@JoinColumn(name="id_user")},
-            inverseJoinColumns = {@JoinColumn(name="id_text")})
+            joinColumns = {@JoinColumn(name = "id_user")},
+            inverseJoinColumns = {@JoinColumn(name = "id_text")})
     private List<Text> textList;
 
     public User() {

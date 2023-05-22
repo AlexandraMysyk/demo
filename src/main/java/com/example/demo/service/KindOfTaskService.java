@@ -17,17 +17,17 @@ public class KindOfTaskService {
         this.kindOfTaskDao = kindOfTaskDao;
     }
 
-//    @Transactional
-//    public void insertKindOfTask(KindOfTask kindOfTask) {
-//        kindOfTaskDao.save(kindOfTask);
-//    }
-//
-//    @Transactional
-//    public void deleteKindOfTask(KindOfTask kindOfTask) {
-//        kindOfTaskDao.delete(kindOfTask);
-//    }
-//
-//    public List<KindOfTask> getAllTexts() {
-//        return kindOfTaskDao.findAll();
-//    }
+    @Transactional
+    public void insertKindOfTask(KindOfTask kindOfTask) {
+        kindOfTaskDao.save(kindOfTask);
+    }
+
+    @Transactional
+    public void deleteKindOfTask(KindOfTask kindOfTask) {
+        kindOfTaskDao.delete(kindOfTask);
+    }
+
+    public List<KindOfTask> getAllTexts() {
+        return kindOfTaskDao.findAll();
+    }
 }

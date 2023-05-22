@@ -23,8 +23,8 @@ public class Word implements Serializable {
     private String extension;
     @ManyToMany
     @JoinTable(name = "WordToDictionary",
-            joinColumns = {@JoinColumn(name="id_word")},
-            inverseJoinColumns = {@JoinColumn(name="id_pd")})
+            joinColumns = {@JoinColumn(name = "id_word")},
+            inverseJoinColumns = {@JoinColumn(name = "id_pd")})
     private List<PersonalDictionary> personalDictionaries;
 
     public Word() {
@@ -33,7 +33,8 @@ public class Word implements Serializable {
     public Word(int id_word) {
         this.id_word = id_word;
     }
-        public Word(int id, String name, String meaning, String translation, byte[] picture, String extension) {
+
+    public Word(int id, String name, String meaning, String translation, byte[] picture, String extension) {
         this.id_word = id;
         this.name = name;
         this.meaning = meaning;
