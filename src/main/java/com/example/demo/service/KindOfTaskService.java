@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.Repositories.KindOfTaskDao;
 import com.example.demo.entities.KindOfTask;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +16,15 @@ public class KindOfTaskService {
         this.kindOfTaskDao = kindOfTaskDao;
     }
 
-    @Transactional
     public void insertKindOfTask(KindOfTask kindOfTask) {
         kindOfTaskDao.save(kindOfTask);
     }
 
-    @Transactional
     public void deleteKindOfTask(KindOfTask kindOfTask) {
         kindOfTaskDao.delete(kindOfTask);
     }
 
-    public List<KindOfTask> getAllTexts() {
+    public List<KindOfTask> getAllTasks() {
         return kindOfTaskDao.findAll();
     }
 }
