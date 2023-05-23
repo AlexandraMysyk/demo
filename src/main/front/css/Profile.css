@@ -1,0 +1,11 @@
+
+.frequency 
+{
+	margin-top: 10px;
+	display: none;
+}
+
+input[value="yes"]:checked ~ .frequency 
+{
+	display: block;
+}

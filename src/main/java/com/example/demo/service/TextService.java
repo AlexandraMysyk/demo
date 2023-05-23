@@ -17,7 +17,7 @@ public class TextService {
         this.textDao = textDao;
     }
 
-    public Text getTextDao(int id) {
+    public String getTextDao(int id) {
         return textDao.findById(id);
     }
 
@@ -43,4 +43,6 @@ public class TextService {
     public List<Text> getAllByLevel(String complexityLevel) {
         return textDao.findByLevel(complexityLevel);
     }
+
+
 }

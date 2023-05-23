@@ -1,0 +1,153 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="../scripts/script.js"></script>
+	<title>The Impact of Technology on Society</title>
+  <style>
+    /* Стилі для підсвічування */
+    .highlight {
+      background-color: #f2e9ff;
+    }
+    .selected {
+      color: #7a5fd9;
+    }
+    .word {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <ul class="tab-container">
+      <li><a href="Texts.html">Texts</a></li>
+      <li><a href="Tasks.html">Tasks</a></li>
+      <li><a href="Dictionary.html">Personal dictionary</a></li>
+      <li><a href="Profile.html">Profile</a></li>
+    </ul>
+  </header>
+  <h1>Read Text</h1>
+	<form class="form-container">
+	  <h2 id="textName"></h2>
+		<h2 id="textLevel"></h2>
+		<p id="text" class="text"></p>
+    
+    <div class="buttons">
+    <button type="button" onclick="open_list_text()">Return to texts</button>
+  </div>
+  <div id="result"></div>
+	</form>
+	<script>
+      function getTranslation(word) {
+      const m_word = word.innerHTML.trim();
+      const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${m_word}`;
+      const langFrom = 'en';
+      const langTo = 'uk';
+      const apiUrl = `https://api.mymemory.translated.net/get?q=${m_word}&langpair=${langFrom}|${langTo}`;
+
+      const resultElement = document.getElementById('result');
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const definition = data[0].meanings[0].definitions[0].definition;
+          resultElement.innerHTML = `<h2>Word: ${m_word}</h2><h2>Meaning: ${definition}</h2>`;
+        })
+        .catch(() => {
+          resultElement.innerHTML = `<p class="error">Couldn't find the word</p>`;
+        });
+
+      if (!m_word) {
+        return;
+      }
+
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          const translatedText = data.responseData.translatedText;
+          resultElement.innerHTML += `<h2>Translation: ${translatedText}</h2>`;
+        })
+        .catch(error => console.error(error));
+    }
+    function getText(id){
+      const resultElement = document.getElementById('result');
+      const url = `http://localhost:8080/api/getText/${id}`;
+    
+      fetch(url)
+      .then(response => {
+          if (response.ok) {
+            return response.text(); // Отримати текст відповіді
+          } else {
+            throw new Error('Error: ' + response.status);
+          }})
+        .then(data => {
+          const values = data.split(',');
+          const id = values[0];
+          const complexity = values[1];
+          const content = values[2];
+          const id_admin = values[3];
+          const definition = data;
+          console.log(data);
+          resultElement.innerHTML = `<h2>TEXT: ${content}</h2>`;
+        })
+        .catch(() => {
+          resultElement.innerHTML = `<p class="error">Couldn't find the text</p>`;
+        })
+        ;
+
+      
+    }
+
+          const m_data = {
+			"textName": "The Impact of Technology on Society",
+			"textLevel": "advanced",
+			"text": "The impact of technology on society is a vast and complex topic that has been studied and debated for many years. Advances in technology have brought about many positive changes in society, from improved medical treatments to more efficient transportation and communication systems. However, there are also concerns about the negative effects of technology on society, such as the potential for increased social isolation, loss of jobs due to automation, and privacy concerns. As technology continues to advance at a rapid pace, it is important for individuals and society as a whole to consider the implications and make informed decisions about its use."		};
+    // Відображення даних на сторінці
+    document.getElementById("textName").innerHTML = wrapWordsInSpans(m_data.textName);
+    document.getElementById("textLevel").innerHTML = wrapWordsInSpans(m_data.textLevel);
+    document.getElementById("text").innerHTML = wrapWordsInSpans(m_data.text);
+
+    // Отримуємо всі елементи з класом "word"
+    const words = document.querySelectorAll('.word');
+
+    words.forEach(word => {
+      word.addEventListener('mouseover', () => {
+        word.classList.add('highlight');
+      });
+
+      word.addEventListener('mouseout', () => {
+        word.classList.remove('highlight');
+      });
+
+      let translationVisible = false;
+
+    let selectedWord = null;
+      word.addEventListener('click', () => {
+          if (selectedWord) {
+            selectedWord.classList.remove('selected');
+            translationVisible = false;
+            selectedWord = null;
+          }
+
+          // Виділяємо нове слово
+          word.classList.add('selected');
+          selectedWord = word;
+          const translation = getText(2);
+          const selectedText = document.createElement('span');
+          selectedText.textContent = translation;
+          selectedText.classList.add('selected-text');
+          word.parentNode.insertBefore(selectedText, word.nextSibling);
+          word.classList.add('selected');
+          translationVisible = true;
+        
+      });
+    });
+ 
+	</script>
+	   
+</body>
+</html>

@@ -22,7 +22,7 @@ public class TextController {
     }
 
     @GetMapping(path = "/getText/{id}", produces = "textById/json")
-    public ResponseEntity<Text> getTextById(@PathVariable int id) {
+    public ResponseEntity<String> getTextById(@PathVariable int id) {
         return new ResponseEntity<>(textService.getTextDao(id), HttpStatus.OK);
     }
 

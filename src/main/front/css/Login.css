@@ -1,0 +1,76 @@
+/* Фоновий колір сторінки */
+body {
+	background-color: #f2e9ff;
+}
+
+/* Стилі для форми */
+form {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px #ccc;
+	margin: 20px auto;
+	max-width: 600px;
+	
+	display: flex;
+	flex-wrap: wrap;
+}
+
+/* Стилі для полів вводу */
+input[type="email"],input[type="password"],
+textarea {
+	
+	flex: 1 1 400px;
+	padding: 10px;
+	border: 2px solid #7b2cbf;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	font-size: 16px;
+	color: #7b2cbf;
+	width: 100%;
+}
+input[type="email"],input[type="password"],
+select {
+    
+	padding: 10px;
+	border: 2px solid #7b2cbf;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	width: 100%;
+	font-size: 16px;
+	color: #7b2cbf;
+}
+label {
+	flex: 0 0 200px;
+	display: block;
+	margin-bottom: 10px;
+	color: #7b2cbf;
+	font-weight: bold;
+}
+/* Стилі для кнопки відправки форми */
+button {
+	flex: 0 0 200px;
+	padding: 10px;
+	border-radius: 5px;
+	font-size: 16px;
+	color: #fff;
+	background-color: #7b2cbf;
+	border: none;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #fff;
+	color: #7b2cbf;
+}
+button[type="submit"], 
+select{
+	text-align: center; 
+	margin: 0 auto;
+}
+
+/* Стилі для заголовка */
+h1 {
+	color: #7b2cbf;
+    text-align: center;
+}

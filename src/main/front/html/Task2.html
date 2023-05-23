@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
+	<script src="../scripts/script.js"></script>
+    <title>Flashcards</title>
+    <style>
+        
+        .flashcard {
+			margin: 0 auto;
+            width: 300px;
+            height: 200px;
+            background-color: #ecdfff;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .flashcard-inner {
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+            margin: 0 auto;
+        }
+
+        .flashcard-front,
+        .flashcard-back {
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+			/* text-align: center; */
+        }
+
+        .flashcard-front {
+            z-index: 2;
+            margin: 0 auto;
+        }
+
+        .flashcard-back {
+            transform: rotateY(180deg);
+            z-index: 1;
+            margin: 0 auto;
+        }
+
+        .flashcard h2 {
+            margin-top: 0;
+			margin: 0 auto;
+        }
+    </style>
+</head>
+
+	
+<body>
+	<header>
+    <ul class="tab-container">
+      <li><a href="Texts.html">Texts</a></li>
+      <li><a href="Tasks.html">Tasks</a></li>
+      <li><a href="Dictionary.html">Personal dictionary</a></li>
+      <li><a href="Profile.html">Profile</a></li>
+    </ul>
+  </header>
+  
+    <h1>Flashcards</h1>
+	<form class="form-container">
+    <div class="flashcard" onclick="flipCard(this)">
+        <div class="flashcard-inner">
+            <div class="flashcard-front">
+                <h2>Term 1</h2>
+            </div>
+            <div class="flashcard-back">
+                <p>Definition 1</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flashcard" onclick="flipCard(this)">
+        <div class="flashcard-inner">
+            <div class="flashcard-front">
+                <h2>Term 2</h2>
+            </div>
+            <div class="flashcard-back">
+                <p >Definition 2</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flashcard" onclick="flipCard(this)">
+        <div class="flashcard-inner">
+            <div class="flashcard-front">
+                <h2>Term 3</h2>
+            </div>
+            <div class="flashcard-back">
+                <p>Definition 3</p>
+            </div>
+        </div>
+    </div>
+     <div class="buttons">
+        <button type="button" onclick="returnToTaskList()">Return to tasks</button>
+   </div>
+	</form>
+    <!-- Додайте більше флешкартів за потреби -->
+
+    <script>
+        function flipCard(flashcard) {
+            flashcard.classList.toggle("flipped");
+        }
+    </script>
+</body>
+</html>

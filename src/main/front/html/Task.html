@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../scripts/script.js"></script>
+    <title>Insert a word</title>
+    <style>
+      .hide {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <ul class="tab-container">
+        <li><a href="Texts.html">Texts</a></li>
+        <li><a href="Tasks.html">Tasks</a></li>
+        <li><a href="Dictionary.html">Personal dictionary</a></li>
+        <li><a href="Profile.html">Profile</a></li>
+      </ul>
+    </header>
+    <h1>Insert a word</h1>
+    <form class="form-container">
+      <div id="sentenceTasks" class="hide">
+        <button onclick="showHint(event)">Ask for a Hint</button>
+        <p id="sentence"></p>
+        <input type="text" id="input" placeholder="Enter word or phrase" />
+        <button onclick="insertWord(event)">Insert Word</button>
+        <button onclick="showNextSentence(event)">Next Sentence</button>
+        <button onclick="showResultsSentenceTasks(event)">Complete Task</button>
+      </div>
+
+      <div id="hint" class="hide">
+        <h3>Hint</h3>
+        <p id="hintText"></p>
+      </div>
+
+      <div id="results" class="hide">
+        <h2>Task Results</h2>
+        <p id="resultText"></p>
+        <button onclick="showSentenceTasks()">Return to Task</button>
+      </div>
+      <div class="buttons">
+        <button type="button" onclick="returnToTaskList(event)">
+          Return to tasks
+        </button>
+      </div>
+    </form>
+    <script>
+      const m_data = {
+        sentenceTasks: {
+          sentences: [
+            "Work is an _ part of our lives and plays a significant role in shaping our identity and contributing to society. ",
+            "It encompasses various activities and occupations through which individuals _ their skills, knowledge, and efforts to accomplish tasks and achieve specific goals.",
+            "Work provides us with a sense of _, fulfillment, and personal growth. ",
+          ],
+          words: ["essential", "apply", "purpose"],
+          ua: ["", "", ""],
+          meanings: [
+            "absolutely necessary; extremely important.",
+            "to put to use especially for some practical purpose",
+            "the reason for which something is done or created or for which something exists.",
+          ],
+        },
+      };
+
+      let currentTaskIndex = 0;
+	  document.getElementById("sentenceTasks").classList.remove("hide");
+      function showSentenceTasks() {
+        document.getElementById("sentenceTasks").classList.remove("hide");
+        document.getElementById("results").classList.add("hide");
+        document.getElementById("hint").classList.add("hide");
+         displayCurrentTask();
+      }
+
+      function showHint(e) {
+        e.preventDefault();
+        document.getElementById("hintText").textContent = getHint(e);
+        document.getElementById("hint").classList.remove("hide");
+      }
+
+      function getHint(e) {
+        e.preventDefault();
+        return m_data.sentenceTasks.meanings[currentTaskIndex];
+      }
+
+      function insertWord(e) {
+        e.preventDefault();
+        const userInput = document.getElementById("input").value.trim();
+        const currentTask = m_data.sentenceTasks.sentences[currentTaskIndex];
+        const replacedSentence = currentTask.replace("_", userInput);
+
+        document.getElementById("sentence").innerHTML = replacedSentence;
+        m_data.sentenceTasks.ua[currentTaskIndex] = userInput;
+        document.getElementById("input").value = "";
+      }
+
+      function showNextSentence(e) {
+        e.preventDefault();
+        currentTaskIndex++;
+        if (currentTaskIndex < m_data.sentenceTasks.sentences.length) {
+          displayCurrentTask(e);
+        } else {
+          showResultsSentenceTasks(e);
+        }
+      }
+
+      function showResultsSentenceTasks(e) {
+        e.preventDefault(e);
+        const totalTasks = m_data.sentenceTasks.sentences.length;
+        let correctAnswers = 0;
+
+        for (let i = 0; i < totalTasks; i++) {
+          const sentence = m_data.sentenceTasks.sentences[i];
+          const word = m_data.sentenceTasks.words[i];
+          const userInput = m_data.sentenceTasks.ua[i];
+          if (userInput === word) {
+            correctAnswers++;
+          }
+        }
+
+        const resultPercentage = (correctAnswers / totalTasks) * 100;
+
+        document.getElementById("sentenceTasks").classList.add("hide");
+        document.getElementById("results").classList.remove("hide");
+        document.getElementById("hint").classList.add("hide");
+        document.getElementById(
+          "resultText"
+        ).textContent = `You answered ${correctAnswers} out of ${totalTasks} tasks correctly (${resultPercentage}%).`;
+      }
+
+      function displayCurrentTask(e) {
+        e.preventDefault();
+        document.getElementById("hint").classList.add("hide");
+        const sentence = m_data.sentenceTasks.sentences[currentTaskIndex];
+        const replacedSentence = sentence.replace(
+          "_",
+          `<input type="text" class="current-task" id="input${currentTaskIndex}" placeholder=" " disabled>`
+        );
+        document.getElementById("sentence").innerHTML = replacedSentence;
+      }
+
+      showSentenceTasks();
+    </script>
+  </body>
+</html>

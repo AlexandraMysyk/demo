@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dictionary</title>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/Dictionary.css">
+  <style>
+    input {
+	  flex: 1 1 400px;
+	  padding: 10px;
+	  border: 2px solid #7b2cbf;
+	  border-radius: 5px;
+	  margin-bottom: 20px;
+	  font-size: 16px;
+	  color: #7b2cbf;
+	  width: 100%;
+	 
+  }
+  .hidden {
+  display: none; /* Приховування елементів з класом "hidden" */
+}
+  </style>
+</head>
+<body>
+  <header>
+    <ul class="tab-container">
+      <li><a href="Texts.html">Texts</a></li>
+      <li><a href="Tasks.html">Tasks</a></li>
+      <li><a class="active" href="Dictionary.html">Personal dictionary</a></li>
+      <li><a href="Profile.html">Profile</a></li>
+    </ul>
+  </header>  
+  <h1>Working with a Dictionary</h1>
+  <form class="filter-row">
+    <div id="dictionary">
+      <ul id="wordList">
+        <li>
+          <table class="word-item center-table">
+            <tr>
+              <td>
+                <h3 class="title">word:</h3>
+              </td>
+              <td>
+                <p class="value">attack</p>
+              </td>
+            </tr>
+            <tr class="full-row hidden">
+              <td>
+                <h3 class="title">translation:</h3>
+              </td>
+              <td>
+                <p class="value">напад</p>
+              </td>
+            </tr>
+            <tr class="full-row hidden">
+              <td>
+                <h3 class="title">meaning:</h3>
+              </td>
+              <td>
+                <p class="value">take aggressive military action against (a place or enemy forces) with weapons or armed force.</p>
+              </td>
+            </tr>
+            <tr class="full-row hidden">
+              <td>
+                <h3 class="title">content:</h3>
+              </td>
+              <td>
+                <p class="value">Several months after I graduated from college, my dad had a massive heart attack that should have killed him.</p>
+              </td>
+            </tr>
+            <tr class="full-row hidden">
+              <td colspan="2" class="image-container">
+                <img class="image" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/Pulwama_terror_attack_kashmir_AP.jpeg?size=690:388" alt="Image 2">
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <button class="open-button" onclick="toggleDetails(this)">Open</button>
+                <button class="edit-button" onclick="editWord(this)">Edit</button>
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li>
+          <table class="word-item center-table">
+            <tr>
+              <td><h3 class="title">word:</h3></td>
+              <td><p class="value">life</p></td>
+            </tr>
+            <tr class="full-row hidden">
+              <td>
+                <h3 class="title">translation:</h3>
+              </td>
+              <td>
+                <p class="value">життя</p>
+              </td>
+            </tr>
+            <tr class="full-row hidden">
+              <td>
+                <h3 class="title">meaning:</h3>
+              </td>
+              <td>
+                <p class="value"></p>
+              </td>
+            </tr>
+            <tr class="full-row hidden">
+              <td>
+                <h3 class="title">content:</h3>
+              </td>
+              <td>
+                <p class="value"></p>
+              </td>
+            </tr>
+            <tr class="full-row hidden">
+              <td colspan="2" class="image-container">
+                <img class="image" src="https://img.freepik.com/free-photo/lavender-field-at-sunset-near-valensole_268835-3910.jpg" alt="Image 1">
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <button class="open-button" onclick="toggleDetails(this)">Open</button>
+                <button class="edit-button" onclick="editWord(this)">Edit</button>
+              </td>
+            </tr>
+          </table>
+        </li>
+      </ul>
+    </div>
+  </form>
+<script>
+ function toggleDetails(button) {
+  event.preventDefault();
+  const wordItem = button.closest('.word-item');
+  const detailsRows = wordItem.querySelectorAll('.full-row');
+
+  detailsRows.forEach(row => {
+    row.classList.toggle('hidden');
+  });
+
+  if (button.innerHTML === "Open") {
+    button.innerHTML = "Close";
+  } else {
+    button.innerHTML = "Open";
+  }
+}
+function editWord(button) {
+  event.preventDefault();
+  const wordItem = button.closest('.word-item');
+  const valueElements = wordItem.querySelectorAll('.value');
+  const imageElement = wordItem.querySelector('.image');
+  const editButton = wordItem.querySelector('.edit-button');
+
+  if (editButton.innerHTML === "Edit") {
+    editButton.innerHTML = "Save";
+
+    // Enable editing and display input fields
+    valueElements.forEach(element => {
+      const value = element.innerHTML;
+      const input = document.createElement('input');
+      input.value = value;
+      element.innerHTML = '';
+      element.appendChild(input);
+    });
+
+    const imageLinkInput = document.createElement('input');
+    imageLinkInput.type = 'text';
+    imageLinkInput.value = imageElement.src;
+    imageElement.parentNode.replaceChild(imageLinkInput, imageElement);
+  } else {
+    editButton.innerHTML = "Edit";
+
+    // Disable editing and update values
+    valueElements.forEach(element => {
+      const input = element.querySelector('input');
+      const value = input.value;
+      element.innerHTML = value;
+    });
+
+    const imageLinkInput = wordItem.querySelector('input[type="text"]');
+    const newImageSrc = imageLinkInput.value;
+    const newImageElement = document.createElement('img');
+    newImageElement.classList.add('image');
+    newImageElement.src = newImageSrc;
+    newImageElement.alt = 'Image';
+    imageLinkInput.parentNode.replaceChild(newImageElement, imageLinkInput);
+  }
+}
+ </script>
+</body>
+</html>
