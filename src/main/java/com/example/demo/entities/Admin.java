@@ -12,6 +12,7 @@ public class Admin implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private int id_admin;
+    private String header;
 
     private String name;
 
@@ -35,6 +36,23 @@ public class Admin implements Serializable {
         this.email = email;
     }
 
+    public Admin(int id_admin, String header, String name, String password, String email, List<Text> textList) {
+        this.id_admin = id_admin;
+        this.header = header;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.textList = textList;
+    }
+
+    public Admin(int id_admin, String header, String name, String password, String email) {
+        this.id_admin = id_admin;
+        this.header = header;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+    }
+
     public int getId_admin() {
         return id_admin;
     }
@@ -49,6 +67,14 @@ public class Admin implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public String getPassword() {
@@ -78,11 +104,11 @@ public class Admin implements Serializable {
     @Override
     public String toString() {
         return "Admin{" +
-                "id=" + id_admin +
+                "id_admin=" + id_admin +
+                ", header='" + header + '\'' +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", textList=" + textList +
                 '}';
     }
 }
