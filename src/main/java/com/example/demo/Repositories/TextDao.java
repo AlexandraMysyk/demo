@@ -9,12 +9,16 @@ import java.util.List;
 
 @Repository
 public interface TextDao extends JpaRepository<Text, Integer> {
-    @Query(value = "SELECT * FROM text WHERE complexity_level=?1", nativeQuery = true)
-    List<Text> findByLevel(String complexityLevel);
+    @Query(value = "SELECT id_text, name  FROM text WHERE complexity_level=?", nativeQuery = true)
+    List<String> findByLevel(String complexityLevel);
 
     @Query(value = "UPDATE ? SET content=?", nativeQuery = true)
-    Text updateText(Text text, String content);
+    String updateText(Text text, String content);
 
-    @Query(value = "SELECT * FROM text WHERE id_text=?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM text WHERE id_text=?", nativeQuery = true)
     String findById(int id);
+
+    @Query(value = "SELECT id_text FROM text WHERE name=?", nativeQuery = true)
+    String findByName(String name);
+
 }

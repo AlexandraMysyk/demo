@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -87,12 +87,25 @@
         .then(data => {
           const values = data.split(',');
           const id = values[0];
-          const complexity = values[1];
-          const content = values[2];
-          const id_admin = values[3];
+          const textLevel = values[1];
+          content = "";
+          for (let i = 2; i <= values.length - 3; i++)
+          {
+            content += values[i];
+          }
+          const name = values[values.length - 2];
+          const id_admin = values[values.length - 1];
           const definition = data;
           console.log(data);
-          resultElement.innerHTML = `<h2>TEXT: ${content}</h2>`;
+          resultElement.innerHTML = `<h2>id: ${id}</h2>
+          <h2>textLevel: ${textLevel}</h2>
+          <h2>content: ${content}</h2>
+          <h2>textName: ${textName}</h2>
+          <h2>id_admin: ${id_admin}</h2>
+          `;
+          document.getElementById("textName").innerHTML = wrapWordsInSpans(textName);
+          document.getElementById("textLevel").innerHTML = wrapWordsInSpans(textLevel);
+          document.getElementById("text").innerHTML = wrapWordsInSpans(content);
         })
         .catch(() => {
           resultElement.innerHTML = `<p class="error">Couldn't find the text</p>`;
@@ -101,15 +114,15 @@
 
       
     }
-
-          const m_data = {
-			"textName": "The Impact of Technology on Society",
-			"textLevel": "advanced",
-			"text": "The impact of technology on society is a vast and complex topic that has been studied and debated for many years. Advances in technology have brought about many positive changes in society, from improved medical treatments to more efficient transportation and communication systems. However, there are also concerns about the negative effects of technology on society, such as the potential for increased social isolation, loss of jobs due to automation, and privacy concerns. As technology continues to advance at a rapid pace, it is important for individuals and society as a whole to consider the implications and make informed decisions about its use."		};
-    // Відображення даних на сторінці
-    document.getElementById("textName").innerHTML = wrapWordsInSpans(m_data.textName);
-    document.getElementById("textLevel").innerHTML = wrapWordsInSpans(m_data.textLevel);
-    document.getElementById("text").innerHTML = wrapWordsInSpans(m_data.text);
+    getText(2);
+    //       const m_data = {
+		// 	"textName": "The Impact of Technology on Society",
+		// 	"textLevel": "advanced",
+		// 	"text": "The impact of technology on society is a vast and complex topic that has been studied and debated for many years. Advances in technology have brought about many positive changes in society, from improved medical treatments to more efficient transportation and communication systems. However, there are also concerns about the negative effects of technology on society, such as the potential for increased social isolation, loss of jobs due to automation, and privacy concerns. As technology continues to advance at a rapid pace, it is important for individuals and society as a whole to consider the implications and make informed decisions about its use."		};
+    // // Відображення даних на сторінці
+    // document.getElementById("textName").innerHTML = wrapWordsInSpans(m_data.textName);
+    // document.getElementById("textLevel").innerHTML = wrapWordsInSpans(m_data.textLevel);
+    // document.getElementById("text").innerHTML = wrapWordsInSpans(m_data.text);
 
     // Отримуємо всі елементи з класом "word"
     const words = document.querySelectorAll('.word');

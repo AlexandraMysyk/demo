@@ -12,6 +12,7 @@ public class Text implements Serializable {
     @Column(nullable = false, updatable = false)
     private int id_text;
     private String content;
+    private String name;
 
     private String complexityLevel;
     @ManyToOne
@@ -30,12 +31,13 @@ public class Text implements Serializable {
         this.id_text = id_text;
     }
 
-    public Text(int id, String content, String complexityLevel, Admin admin, List<User> user) {
+    public Text(int id, String content, String complexityLevel, Admin admin, List<User> user, String name) {
         this.id_text = id;
         this.content = content;
         this.complexityLevel = complexityLevel;
         this.admin = admin;
         this.user = user;
+        this.name = name;
     }
 
     public int getId_text() {

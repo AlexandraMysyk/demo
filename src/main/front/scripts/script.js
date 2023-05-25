@@ -1,24 +1,25 @@
-function clearFields() {
+
+  function clearFields() {
     document.getElementById("text-name").value = "";
     document.getElementById("text-level").selectedIndex = 0;
     document.getElementById("text").value = "";
   }
 // need add realisation
-  function addText() {
+    function addText() {
 
   }
-  function deleteText() {}
+    function deleteText() {}
 
 //add realisation
-function returnToList(){
-
-}
-//add realisation
-function viewText(){
+  function returnToList(){
 
 }
 //add realisation
-function open_list_text(){
+  function viewText(){
+
+}
+//add realisation
+  function open_list_text(){
 if (window.location.href.includes("Edit_text.html")) {
     window.location.href = "List_of_texts.html";
 } else if (window.location.href.includes("Text.html")) {
@@ -26,18 +27,18 @@ if (window.location.href.includes("Edit_text.html")) {
 }
 
 }
-function returnToTaskList(){
+  function returnToTaskList(){
   if (window.location.href.includes("Task.html") || window.location.href.includes("Task2.html")) {
       window.location.href = "Tasks.html";
   } 
   }
-function editText(){}
-function handleEditButtonClick() {
+  function editText(){}
+  function handleEditButtonClick() {
   const selectedText = document.querySelector('input[name="text-item"]:checked');
   if (selectedText) {
     window.location.href = "Edit_text.html";
     
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded",  function() {
       fillForm();
     });
   } else {
@@ -46,16 +47,37 @@ function handleEditButtonClick() {
     const close = document.querySelector(".close");
     popup.style.display = "block";
     // Закрити popup при натисканні на хрестик
-    close.addEventListener("click", function() {
+    close.addEventListener("click",  function() {
       popup.style.display = "none";
     });
   }
 }
-function handleOpenButtonClick() {
-  const selectedText = document.querySelector('input[name="text-item"]:checked');
+  function handleOpenButtonClick() {
+
+  const radioButtons = document.querySelectorAll('input[name="text-item"]');
+let selectedText = '';
+let selectedLevel = '';
+radioButtons.forEach(radioButton => {
+  if (radioButton.checked) {
+    const liElement = radioButton.parentNode;
+    selectedText = liElement.textContent.trim();
+    // //console.log(selectedText);
+  }
+});
+
+
+    // selectedLevel =  selectElement.options[selectElement.selectedIndex].textContent;
+    // //console.log(getSelectedForReadTextLevel());
+    // selectedLevel = document.querySelectorAll('input[name="text-level"]');
+    // //console.log(selectedLevel);
   if (selectedText) {
     if (window.location.href.includes("Texts.html")){
-      window.location.href = "Text.html";
+     //console.log(getSelectedForReadTextLevel());
+     //console.log(getSelectedForReadTextId());
+     setSelectedForReadTextName(selectedText);
+     console.log(getSelectedForReadTextName());
+     console.log(selectedText);
+      // window.location.href = "Text.html";
     }
   } else {
     // Показати popup
@@ -63,12 +85,12 @@ function handleOpenButtonClick() {
     const close = document.querySelector(".close");
     popup.style.display = "block";
     // Закрити popup при натисканні на хрестик
-    close.addEventListener("click", function() {
+    close.addEventListener("click",  function() {
       popup.style.display = "none";
     });
   }
 }
-function openCurTask() {
+  function openCurTask() {
   const taskKindInputs = document.getElementsByName('task-kind');
   const selectedText = document.querySelector('input[name="task-item"]:checked');
   if (selectedText) {
@@ -90,12 +112,12 @@ function openCurTask() {
     const close = document.querySelector(".close");
     popup.style.display = "block";
     // Закрити popup при натисканні на хрестик
-    close.addEventListener("click", function() {
+    close.addEventListener("click",  function() {
       popup.style.display = "none";
     });
   }
 }
-function handleDeleteButtonClick() {
+  function handleDeleteButtonClick() {
   const selectedText = document.querySelector('input[name="text-item"]:checked');
   if (selectedText) {
     // Показати popup
@@ -108,12 +130,12 @@ function handleDeleteButtonClick() {
     const close = document.querySelector(".close");
     popup.style.display = "block";
     // Закрити popup при натисканні на хрестик
-    close.addEventListener("click", function() {
+    close.addEventListener("click",  function() {
       popup.style.display = "none";
     });
   }
 }
-function fillForm() {
+  function fillForm() {
   const data = {
     "textName": "The Impact of Technology on Society",
     "textLevel": "advanced",
@@ -124,7 +146,7 @@ function fillForm() {
 }
 
 
-function convertToCEFR() {
+  function convertToCEFR() {
   switch (document.getElementById("text-level").value) {
     case "beginner":
       return "A1";
@@ -142,7 +164,7 @@ function convertToCEFR() {
       return "";
   }
 }
-function addTextToDataBase() {
+  function addTextToDataBase() {
   // var textName = document.getElementById("text-name").value;
   // var textLevel = convertToCEFR();
   // var text = document.getElementById("text").value;
@@ -151,7 +173,7 @@ function addTextToDataBase() {
  var textLevel = "A3";
  var text = "jyjnhfgdewsdfgbhnjkkjhgfds";
  var admin = 1;
-  console.log(textName, textLevel, text, admin);
+  //console.log(textName, textLevel, text, admin);
 
 const sql = require("msnodesqlv8");
 const connectionstring = "server=.;Database=StudyHub;Trusted_Connection=Yes;Driver={SQL Server Native Client 11.0};";
@@ -159,8 +181,9 @@ const connectionstring = "server=.;Database=StudyHub;Trusted_Connection=Yes;Driv
 sql.query(connectionstring, query, (err, rows) => { console.log(rows);});
 }
 
-function wrapWordsInSpans(text) {
+  function wrapWordsInSpans(text) {
   // Розбиваємо текст на окремі слова за допомогою методу split()
+
   const words = text.split(' ');
 
   // Створюємо новий масив, який міститиме HTML-елементи для кожного слова
@@ -169,12 +192,69 @@ function wrapWordsInSpans(text) {
   // Повертаємо рядок, який містить HTML-елементи <span> для кожного слова
   return wordSpans.join('');
 }
-function getTr(){
+  function wrapTextItem(listNames) {
+  const modifiedString = listNames.replace(/\[\"|\"\]/g, '');
+  const values = modifiedString.split('","');
+ 
+  let wordSpans = [];
+  let wordSpans2 = [];
+
+    // //console.log(values);
+    for (let i = 0; i < values.length; i++) {
+      wordSpans[i] = values[i].split(',')[1];
+    }
+  // //console.log(wordSpans);
+   wordSpans2 = wordSpans.map(name => `<li><input type="radio" name="text-item">${name} </li>`);
+   
+  return wordSpans2.join('');
+}
+  function getTextId(texts, name){
+  let wordSpans = [];
+  wordSpans = getTextsName(texts);
+  for (let i = 0; i < wordSpans.length; i++) {
+if(name==wordSpans[i]){ 
+  console.log(getTextsId(texts)[i]);
+  return getTextsId(texts)[i];
+}
+  }
+   
+}
+  function getTextsId(texts){
+  const modifiedString = texts.replace(/\[\"|\"\]/g, '');
+  const values = modifiedString.split('","');
+ 
+  let wordSpans = [];
+  let wordSpans2 = [];
+
+    // //console.log(values);
+    for (let i = 0; i < values.length; i++) {
+      wordSpans[i] = values[i].split(',')[0];
+    }
+    return wordSpans;
+}
+  function getTextsName(texts){
+  const modifiedString = texts.replace(/\[\"|\"\]/g, '');
+  const values = modifiedString.split('","');
+ 
+  let wordSpans = [];
+  let wordSpans2 = [];
+
+    // //console.log(values);
+    for (let i = 0; i < values.length; i++) {
+      wordSpans[i] = values[i].split(',')[1];
+    }
+    return wordSpans;
+}
+  function getTextName(texts, id){
+    return getTextsName(texts)[id];
+}
+  function getTr()
+{
 let m_word = word.innerHTML.trim();
         fetch(`${url}${m_word}`)
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
+            //console.log(data);
             result[0] = m_word;
             result[1] = data[0].meanings[0].definitions[0].definition;
           })
@@ -191,8 +271,9 @@ let m_word = word.innerHTML.trim();
           .then((data) => {
             const translatedText = data.responseData.translatedText;
             result[2] = translatedText + " ";
-            console.log(result[2]);
+            //console.log(result[2]);
           })
           .catch((error) => console.error(error));
 
-        return  result[2]; }
+        return  result[2];
+       }

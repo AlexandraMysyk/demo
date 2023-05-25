@@ -22,7 +22,7 @@ public class TextService {
     }
 
     @Transactional
-    public Text insertText(Text text) {
+    public Text save(Text text) {
         return textDao.save(text);
     }
 
@@ -32,7 +32,7 @@ public class TextService {
     }
 
     @Transactional
-    public Text updateText(Text text, String content) {
+    public String updateText(Text text, String content) {
         return textDao.updateText(text, content);
     }
 
@@ -40,9 +40,11 @@ public class TextService {
         return textDao.findAll();
     }
 
-    public List<Text> getAllByLevel(String complexityLevel) {
+    public List<String> getAllByLevel(String complexityLevel) {
         return textDao.findByLevel(complexityLevel);
     }
 
-
+    public String getTextsByName(String name) {
+        return textDao.findByName(name);
+    }
 }

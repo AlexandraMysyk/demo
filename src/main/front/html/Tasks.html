@@ -47,5 +47,134 @@
       <div class="buttons">
         <button type="button" id="openTask" onclick="openCurTask()">Open</button>
              </form>
+             <script>
+              import axios from 'axios';
+                function openCurTask() {
+  const taskKindInputs = document.getElementsByName('task-kind');
+  const selectedText = document.querySelector('input[name="task-item"]:checked');
+  if (selectedText) {
+  for (let i = 0; i < taskKindInputs.length; i++) {
+    if (taskKindInputs[i].checked) {
+      const taskKindValue = taskKindInputs[i].value;
+      
+      if (taskKindValue === 'insert-word') {
+        window.location.href = 'Task.html';
+      } else if (taskKindValue === 'flash-card') {
+        window.location.href = 'Task2.html';
+      }
+      
+      break;
+    }
+  }}else {
+    // Показати popup
+    const popup = document.getElementById("select_task");
+    const close = document.querySelector(".close");
+    popup.style.display = "block";
+    // Закрити popup при натисканні на хрестик
+    close.addEventListener("click",  function() {
+      popup.style.display = "none";
+    });
+  }
+}
+              function handleOpenButtonClick() {
+          
+                const radioButtons = document.querySelectorAll('input[name="text-item"]');
+                let selectedText = '';
+                let selectedLevel = '';
+                radioButtons.forEach(radioButton => {
+                  if (radioButton.checked) {
+                    const liElement = radioButton.parentNode;
+                    selectedText = liElement.textContent.trim();
+                    localStorage.setItem('TextName', selectedText)
+          
+                  }
+                });
+                console.log(localStorage.getItem('TextLevel'));
+                const url = `http://localhost:8080/api/getTextsByLevel/${localStorage.getItem('TextLevel')}`;
+                fetch(url)
+                  .then(response => {
+                    if (response.ok) {
+                      return response.text(); // Отримати текст відповіді
+                    } else {
+                      throw new Error('Error: ' + response.status);
+                    }
+                  })
+                  .then(data => {
+                    if (data != "[]") {
+                      localStorage.setItem('TextId', getTextId(data, localStorage.getItem('TextName')));
+                      console.log(localStorage.getItem('TextId'));
+                      console.log(localStorage.getItem('TextName'));
+                    }
+                    else {
+                      localStorage.setItem('TextId', '');
+                    }
+          
+                  })
+                if (selectedText) {
+                  if (window.location.href.includes("Texts.html")) {
+                    window.location.href = "Text.html";
+                  }
+                } else {
+                  // Показати popup
+                  const popup = document.getElementById("select_text");
+                  const close = document.querySelector(".close");
+                  popup.style.display = "block";
+                  // Закрити popup при натисканні на хрестик
+                  close.addEventListener("click", function () {
+                    popup.style.display = "none";
+                  });
+                }
+              }
+              const selectElement = document.getElementById('text-level');
+          
+              selectElement.addEventListener('change', getListOfText);
+          
+          
+              function wrapTextItem(listNames) {
+                const modifiedString = listNames.replace(/\[\"|\"\]/g, '');
+                const values = modifiedString.split('","');
+          
+                let wordSpans = [];
+                let wordSpans2 = [];
+          
+                //console.log(values);
+                for (let i = 0; i < values.length; i++) {
+                  wordSpans[i] = values[i].split(',')[1];
+                }
+                //console.log(wordSpans);
+                wordSpans2 = wordSpans.map(name => `<li><input type="radio" name="text-item">${name} </li>`);
+          
+                return wordSpans2.join('');
+              }
+              function getListOfText() {
+                const textLevel = selectElement.options[selectElement.selectedIndex].textContent;
+                localStorage.setItem('TextLevel', textLevel);
+          
+                const textList = document.getElementById('text-list');
+                const url = `http://localhost:8080/api/getTextsByLevel/${textLevel}`;
+                fetch(url)
+                  .then(response => {
+                    if (response.ok) {
+                      return response.text(); // Отримати текст відповіді
+                    } else {
+                      throw new Error('Error: ' + response.status);
+                    }
+                  })
+                  .then(data => {
+                    if (data != "[]") {
+                      textList.innerHTML = wrapTextItem(data);
+          
+                    }
+                    else {
+                      textList.innerHTML = "";
+                    }
+          
+                  })
+              }
+              getListOfText();
+          
+          
+          
+            </script>
   </body>
 </html>
