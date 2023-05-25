@@ -23,6 +23,7 @@ public class TextService {
 
     @Transactional
     public Text save(Text text) {
+        System.out.println("text in save 1"+ text);
         return textDao.save(text);
     }
 

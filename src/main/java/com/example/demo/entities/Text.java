@@ -39,6 +39,12 @@ public class Text implements Serializable {
         this.user = user;
         this.name = name;
     }
+    public Text(int id, String content, String complexityLevel, String name) {
+        this.id_text = id;
+        this.content = content;
+        this.complexityLevel = complexityLevel;
+        this.name = name;
+    }
 
     public int getId_text() {
         return id_text;
@@ -50,6 +56,13 @@ public class Text implements Serializable {
 
     public String getContent() {
         return content;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getName() {
+        return name;
     }
 
     public void setContent(String content) {
@@ -86,6 +99,7 @@ public class Text implements Serializable {
                 "id=" + id_text +
                 ", content='" + content + '\'' +
                 ", complexityLevel='" + complexityLevel + '\'' +
+                ", name=" + name +
                 ", admin=" + admin +
                 '}';
     }

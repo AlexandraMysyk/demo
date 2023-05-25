@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.entities.Admin;
 import com.example.demo.entities.Text;
 import com.example.demo.service.TextService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,6 +42,17 @@ public class TextController {
     @CrossOrigin(origins = "http://127.0.0.1:8887")
     @PostMapping( "/addText")
     public ResponseEntity<Text> addText(@RequestBody Text text) {
+//        -- use StudyHub;
+//insert into admin(id_admin, name, password, email) value(5,'alinochka', 'alinochkapas', 'alinochka@gmail.com');
+        int id = 5;
+        String name= "alinochka";
+        String password = "alinochkapas";
+        String email = "alinochka@gmail.com";
+        Admin a=new Admin(id, name, password, email);
+        text.setAdmin(a);
+        System.out.println("getComplexityLevel "+ text);
+        System.out.println("getComplexityLevel "+ text.getComplexityLevel());text.setComplexityLevel("a1");
+        System.out.println("getComplexityLevel "+ text.getComplexityLevel());
         return new ResponseEntity<>(textService.save(text), HttpStatus.OK);
     }
 //
