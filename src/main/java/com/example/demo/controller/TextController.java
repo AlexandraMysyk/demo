@@ -38,39 +38,13 @@ public class TextController {
     public ResponseEntity<String> getTextsByName(@PathVariable String name) {
         return new ResponseEntity<>(textService.getTextsByName(name), HttpStatus.OK);
     }
-//    @CrossOrigin(origins = "http://127.0.0.1:8887")
-//    @PostMapping(path = "/addText")
+    @CrossOrigin(origins = "http://127.0.0.1:8887")
+    @PostMapping( "/addText")
+    public ResponseEntity<Text> addText(@RequestBody Text text) {
+        return new ResponseEntity<>(textService.save(text), HttpStatus.OK);
+    }
 //
-//    public ResponseEntity<Text> addText(@RequestBody Text text) {
-//        return new ResponseEntity<>(textService.insertText(text), HttpStatus.OK);
-//    }
-@PostMapping(value = "/posts")
-public ResponseEntity<Post> createPost(HttpServletRequest request,
-                                       UriComponentsBuilder uriComponentsBuilder) {
-    var content = request.getParameter("content");
-    var post = new Post();
-    post.setContent(content);
-    post = postService.save(post);
-    UriComponents uriComponents =
-            uriComponentsBuilder.path("/posts/{id}").buildAndExpand(post.getId());
-    var location = uriComponents.toUri();
-    return ResponseEntity.created(location).build();
-}
-@CrossOrigin(origins = "http://127.0.0.1:8887")
-@PostMapping(path = "/addText",
-        consumes = "text/json")
-public ResponseEntity<Text> create(@RequestBody Text newText) throws ServerException {
-//System.out.println(newText);
-//    Text text = textService.save(newText);
-//
-//    if (text == null) {
-//        System.out.println("newText");
-//        throw new ServerException("stroka");
-//
-//    } else {
-        return new ResponseEntity<>(textService.save(newText), HttpStatus.OK);
-//    }
-}
+
     @PutMapping(path = "/editText")
     public ResponseEntity<String> editText(@RequestBody Text text, @RequestBody String content) {
         return new ResponseEntity<>(textService.updateText(text, content), HttpStatus.OK);
