@@ -49,6 +49,8 @@
   </form>
   <script>
 
+    import axios from "ajax";
+
     let texts = "";
 
     function getTranslation(word) {
@@ -205,27 +207,33 @@
         })
     }
     getText(localStorage.getItem('TextId'));
-    var text = {
-  "id_text": 100,
-  "complexity_level": "",
-  "content": "",
-  "name": "",
-  "id_admin": 1
-};
-
-axios.post(`http://localhost:8080/api/addText`, {
-  "id_text": 101,
-  "complexityLevel": "2",
+    const json = JSON.stringify({ id_text: 98,
+      complexityLevel: "Intermediate",
+      content: "098765",
+      name: "wer"});
+    const res =  axios.post(`http://localhost:8080/api/addText`, json, {
+      headers: {
+        // Overwrite Axios's automatically set Content-Type
+        'Content-Type': 'application/json'
+      }
+    });
+console.log(
+    res
+    //res.data.headers['Content-Type']
+    );
+/*axios.post(`http://localhost:8080/api/addText`, {
+  "id_text": 98,
+  "complexityLevel": "Intermediate",
   "content": "098765",
   "name": "wer"
 }, {
   headers: {
     'Content-Type': 'application/json'
   }
-})
+});
   .then(response => {
     console.log('Текст успішно додано до бази даних');
-  })
+  })*/
   // .catch(error => {
   //   console.error('Помилка при додаванні тексту до бази даних', error);
   // }
