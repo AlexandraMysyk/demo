@@ -39,7 +39,7 @@ public class TextController {
     public ResponseEntity<String> getTextsByName(@PathVariable String name) {
         return new ResponseEntity<>(textService.getTextsByName(name), HttpStatus.OK);
     }
-    @CrossOrigin(origins = "http://127.0.0.1:8887")
+    //@CrossOrigin(origins = "http://localhost:63342")
     @PostMapping( "/addText")
     public ResponseEntity<Text> addText(@RequestBody Text text) {
 //        -- use StudyHub;
