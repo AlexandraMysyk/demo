@@ -20,7 +20,7 @@ public class Word implements Serializable {
 
     private byte[] picture;
 
-    private String extension;
+    private String content;
     @ManyToMany
     @JoinTable(name = "WordToDictionary",
             joinColumns = {@JoinColumn(name = "id_word")},
@@ -34,22 +34,22 @@ public class Word implements Serializable {
         this.id_word = id_word;
     }
 
-    public Word(int id, String name, String meaning, String translation, byte[] picture, String extension) {
+    public Word(int id, String name, String meaning, String translation, byte[] picture, String content) {
         this.id_word = id;
         this.name = name;
         this.meaning = meaning;
         this.translation = translation;
         this.picture = picture;
-        this.extension = extension;
+        this.content = content;
     }
 
-    public Word(int id, String name, String meaning, String translation, byte[] picture, String extension, List<PersonalDictionary> personalDictionaries) {
+    public Word(int id, String name, String meaning, String translation, byte[] picture, String content, List<PersonalDictionary> personalDictionaries) {
         this.id_word = id;
         this.name = name;
         this.meaning = meaning;
         this.translation = translation;
         this.picture = picture;
-        this.extension = extension;
+        this.content = content;
         this.personalDictionaries = personalDictionaries;
     }
 
@@ -93,12 +93,12 @@ public class Word implements Serializable {
         this.picture = picture;
     }
 
-    public String getExtension() {
-        return extension;
+    public String getContent() {
+        return content;
     }
 
-    public void setExtension(String extension) {
-        this.extension = extension;
+    public void setContent(String extension) {
+        this.content = extension;
     }
 
     public List<PersonalDictionary> getPersonalDictionaries() {
@@ -117,7 +117,7 @@ public class Word implements Serializable {
                 ", meaning='" + meaning + '\'' +
                 ", translation='" + translation + '\'' +
                 ", picture=" + Arrays.toString(picture) +
-                ", extension='" + extension + '\'' +
+                ", content='" + content + '\'' +
                 '}';
     }
 }
