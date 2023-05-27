@@ -17,13 +17,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(path = "/addUser/{user}")
-    public ResponseEntity<User> addUser(@RequestBody @PathVariable User user) {
+    @PostMapping(path = "/addUser")
+    public ResponseEntity<User> addUser(@RequestBody  User user) {
         return new ResponseEntity<>(userService.insertUser(user), HttpStatus.CREATED);
     }
 
-    @PostMapping("/editUser/{user}")
-    public ResponseEntity<User> editUser(@RequestBody @PathVariable User userNew, @RequestBody @PathVariable int id) {
+    @PostMapping("/editUser")
+    public ResponseEntity<User> editUser(@RequestBody User userNew, @RequestBody  int id) {
         return new ResponseEntity<>(userService.editUser(userNew, id), HttpStatus.CREATED);
+    }
+    @GetMapping("/checkUserIfExists/{email}")
+    public ResponseEntity<User> checkUserIfExists(@RequestBody String email){
+        return new ResponseEntity<>(userService.getUserByEmail(email),HttpStatus.OK);
     }
 }

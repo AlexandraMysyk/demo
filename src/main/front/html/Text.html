@@ -49,7 +49,7 @@
   </form>
   <script>
 
-    import axios from "ajax";
+
 
     let texts = "";
 
@@ -207,20 +207,7 @@
         })
     }
     getText(localStorage.getItem('TextId'));
-    const json = JSON.stringify({ id_text: 98,
-      complexityLevel: "Intermediate",
-      content: "098765",
-      name: "wer"});
-    const res =  axios.post(`http://localhost:8080/api/addText`, json, {
-      headers: {
-        // Overwrite Axios's automatically set Content-Type
-        'Content-Type': 'application/json'
-      }
-    });
-console.log(
-    res
-    //res.data.headers['Content-Type']
-    );
+
 /*axios.post(`http://localhost:8080/api/addText`, {
   "id_text": 98,
   "complexityLevel": "Intermediate",

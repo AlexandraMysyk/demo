@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 public interface UserDao extends JpaRepository<User, Integer> {
     @Query(value = "UPDATE user SET name=?, email=?, passwort=? WHERE id_user=? ", nativeQuery = true)
     User editUserByid(String name, String email, String passwort, int id);
-
+    @Query(value="SELECT * FROM user WHERE email=?", nativeQuery = true)
+    User findByEmail(String email);
     @Query(value = "DELETE FROM user WHERE id_user=?", nativeQuery = true)
     User deleteUserById(int id);
 }
