@@ -47,4 +47,8 @@ public class TextService {
     public String getTextsByName(String name) {
         return textDao.findByName(name);
     }
+
+    public void deleteTextById(int id) {
+         textDao.deleteById(id);
+    }
 }

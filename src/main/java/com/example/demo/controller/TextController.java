@@ -69,4 +69,14 @@ public class TextController {
     public ResponseEntity<String> editText(@RequestBody String content,@RequestBody String name,@RequestBody String level, @RequestBody int id) {
         return new ResponseEntity<>(textService.updateText(content, name, level,id), HttpStatus.OK);
     }
+    @DeleteMapping(path="/deleteText")
+    public ResponseEntity<Object> deleteText(@RequestBody int id){
+        try {
+            textService.deleteTextById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
 }

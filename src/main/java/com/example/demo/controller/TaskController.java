@@ -24,7 +24,7 @@ public class TaskController {
     public ResponseEntity<List<String>> getTasksByLevel(@PathVariable String level,@PathVariable int idUser) {
         return new ResponseEntity<>(taskService.getAllByLevel(level,idUser), HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path = "/addTask/", produces = "newtask/json")
     public ResponseEntity<Task> addTask(@RequestBody @PathVariable Task task) {
         return new ResponseEntity<>(taskService.insertTask(task), HttpStatus.CREATED);

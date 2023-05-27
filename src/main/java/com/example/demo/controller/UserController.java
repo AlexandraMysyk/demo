@@ -16,12 +16,12 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path = "/addUser")
     public ResponseEntity<User> addUser(@RequestBody  User user) {
         return new ResponseEntity<>(userService.insertUser(user), HttpStatus.CREATED);
     }
-
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping("/editUser")
     public ResponseEntity<User> editUser(@RequestBody User userNew, @RequestBody  int id) {
         return new ResponseEntity<>(userService.editUser(userNew, id), HttpStatus.CREATED);

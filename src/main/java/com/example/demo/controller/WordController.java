@@ -17,6 +17,7 @@ public class WordController {
     public WordController(WordService wordService) {
         this.wordService = wordService;
     }
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping("/getAllWords/{email}")
     public ResponseEntity<List<String>> getAllWords(@RequestBody @PathVariable String email){
         return new ResponseEntity<>(wordService.getAllWordsByEmail(email), HttpStatus.OK);
