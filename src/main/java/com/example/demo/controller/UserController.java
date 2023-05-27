@@ -27,7 +27,7 @@ public class UserController {
         return new ResponseEntity<>(userService.editUser(userNew, id), HttpStatus.CREATED);
     }
     @GetMapping("/checkUserIfExists/{email}")
-    public ResponseEntity<User> checkUserIfExists(@RequestBody String email){
+    public ResponseEntity<User> checkUserIfExists(@RequestBody @PathVariable String email){
         return new ResponseEntity<>(userService.getUserByEmail(email),HttpStatus.OK);
     }
 }

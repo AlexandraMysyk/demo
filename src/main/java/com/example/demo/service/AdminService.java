@@ -16,6 +16,9 @@ public class AdminService {
     public AdminService(AdminDao adminDao) {
         this.adminDao = adminDao;
     }
+    public Admin getAdminByEmail(String email){
+        return adminDao.findByEmail(email);
+    }
 
     @Transactional
     public void insertAdmin(Admin admin) {
@@ -30,4 +33,5 @@ public class AdminService {
     public List<Admin> getAllAdmins() {
         return adminDao.findAll();
     }
+
 }

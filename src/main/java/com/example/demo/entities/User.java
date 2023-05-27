@@ -38,6 +38,14 @@ public class User implements Serializable {
         this.id_user = id_user;
     }
 
+    public User(int id_user, String name, String password, String email, PersonalDictionary personalDictionary) {
+        this.id_user = id_user;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.personalDictionary = personalDictionary;
+    }
+
     public User(int id_user, String name, String password, String email, PersonalDictionary personalDictionary, List<Task> taskList, List<Text> textList) {
         this.id_user = id_user;
         this.name = name;
