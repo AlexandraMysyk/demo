@@ -17,8 +17,8 @@ public class UserService {
     public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
-    public User getUserByEmail(String email){
-        return userDao.findByEmail(email);
+    public String getUserByEmail(String email, String password){
+        return userDao.findByEmail(email, password);
     }
 
     public Optional<User> getUserDao(int id) {

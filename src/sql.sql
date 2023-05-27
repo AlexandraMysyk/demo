@@ -1,6 +1,9 @@
 -- drop database StudyHub;
 -- create database StudyHub;
 use StudyHub;
+select * from user;
+-- INSERT INTO  personal_dictionary (id_pd, user_id_user) VALUES (1, 1);
+-- INSERT INTO  user (id_user, email, name, password, personal_dictionary_id_pd) VALUES (1, 'alibil@gmail.com', 'alibil', 'user1password', 1);
 -- INSERT INTO  admin (id_admin, email, name, password) VALUES (1, 'alibil@gmail.com', 'alibil', 'user1password');
 -- INSERT INTO text (name,id_text,id_admin, complexity_level, content) VALUES ('The Mona Lisa', 1,1, 'Advanced', 'The Mona Lisa is one of the most famous and iconic paintings in the world, created by the Italian artist Leonardo da Vinci. Though I cannot see the picture, I can certainly describe it to you.
 -- The Mona Lisa depicts a half-length portrait of a woman believed to be Lisa Gherardini, an Italian noblewoman. She is shown sitting against a dark background with a vast landscape visible behind her. The woman is portrayed in a three-quarter view, facing slightly to the left.

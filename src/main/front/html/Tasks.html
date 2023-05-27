@@ -1,180 +1,171 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Tasks</title>
-    <script src="../scripts/script.js"></script>
-    <link rel="stylesheet" href="../css/style.css">
-    <div id="content"></div>
-    </head>
-  <body>
-    <div id="select_task" class="popup">
-      <div class="popup-content">
-        <span class="close">&times;</span>
-        <h2>Select the task</h2>
-      </div>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tasks</title>
+  <script src="../scripts/script.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+  <div id="content"></div>
+</head>
+
+<body>
+  <div id="select_task" class="popup">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <h2>Select the task</h2>
     </div>
-    <header>
-      <ul class="tab-container">
-        <li><a href="Texts.html">Texts</a></li>
-        <li><a class="active" href="Tasks.html">Tasks</a></li>
-        <li><a href="Dictionary.html">Personal dictionary</a></li>
-        <li><a href="Profile.html">Profile</a></li>
-    </header>
-    <h1>Select a Task to complete </h1>
-    <form class="filter-row">
-      <label for="text-level">Select a level of text:</label>
-      <select id="text-level" name="text-level" required>
-        <option value="">--Select--</option>
-        <option value="beginner" >Beginner</option>
-        <option value="pre-intermediate">Pre Intermediate</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="upper-intermediate">Upper Intermediate</option>
-        <option value="advanced">Advanced</option>
-        <option value="profficiency">Profficiency</option>
-      </select>
-      <label>Select a kind of task:</label>
-        <input type="radio" name="task-kind" value="insert-word" checked >Insert a word
-        <input type="radio" name="task-kind" value="flash-card" >Flash-cards
-    </form>
-      <form class="form-container">
-        <ul id="task-list">
-          <li><input type="radio" name="task-item">Task 1</li>
-          <li><input type="radio" name="task-item">Task 2</li>
-          <li><input type="radio" name="task-item">Task 3</li>
-        </ul>
-      </ul>
-      <div class="buttons">
-        <button type="button" id="openTask" onclick="openCurTask()">Open</button>
-             </form>
-             <script>
-              import axios from 'axios';
-                function openCurTask() {
-  const taskKindInputs = document.getElementsByName('task-kind');
-  const selectedText = document.querySelector('input[name="task-item"]:checked');
-  if (selectedText) {
-  for (let i = 0; i < taskKindInputs.length; i++) {
-    if (taskKindInputs[i].checked) {
-      const taskKindValue = taskKindInputs[i].value;
-      
-      if (taskKindValue === 'insert-word') {
-        window.location.href = 'Task.html';
-      } else if (taskKindValue === 'flash-card') {
-        window.location.href = 'Task2.html';
+  </div>
+  <header>
+    <ul class="tab-container">
+      <li><a href="Texts.html">Texts</a></li>
+      <li><a class="active" href="Tasks.html">Tasks</a></li>
+      <li><a href="Dictionary.html">Personal dictionary</a></li>
+      <li><a href="Profile.html">Profile</a></li>
+  </header>
+  <h1>Select a Task to complete </h1>
+  <form class="filter-row">
+    <label for="task-level">Select a level of task:</label>
+    <select id="task-level" name="task-level" required>
+      <option value="beginner">Beginner</option>
+      <option value="pre-intermediate">Pre Intermediate</option>
+      <option value="intermediate">Intermediate</option>
+      <option value="upper-intermediate">Upper Intermediate</option>
+      <option value="advanced">Advanced</option>
+      <option value="profficiency">Profficiency</option>
+    </select>
+    <label>Select a kind of task:</label>
+    <input type="radio" name="task-kind" value="insert-word" checked>Insert a word
+    <input type="radio" name="task-kind" value="flash-card">Flash-cards
+  </form>
+  <form class="form-container">
+    <ul id="task-list">
+    </ul>
+    <li><input type="radio" name="text-item">Love </li>
+    </ul>
+    <div class="buttons">
+      <button type="button" id="openTask" onclick="openCurTask()">Open</button>
+  </form>
+  <script>
+
+    function openCurTask() {
+      const taskKindInputs = document.getElementsByName('task-kind');
+      const selectedText = document.querySelector('input[name="text-item"]:checked');
+      if (selectedText) {
+        for (let i = 0; i < taskKindInputs.length; i++) {
+          if (taskKindInputs[i].checked) {
+            const taskKindValue = taskKindInputs[i].value;
+
+            if (taskKindValue === 'insert-word') {
+              window.location.href = 'Task.html';
+            } else if (taskKindValue === 'flash-card') {
+              window.location.href = 'Task2.html';
+            }
+
+            break;
+          }
+        }
+      } else {
+        // Показати popup
+        const popup = document.getElementById("select_task");
+        const close = document.querySelector(".close");
+        popup.style.display = "block";
+        // Закрити popup при натисканні на хрестик
+        close.addEventListener("click", function () {
+          popup.style.display = "none";
+        });
       }
-      
-      break;
     }
-  }}else {
-    // Показати popup
-    const popup = document.getElementById("select_task");
-    const close = document.querySelector(".close");
-    popup.style.display = "block";
-    // Закрити popup при натисканні на хрестик
-    close.addEventListener("click",  function() {
-      popup.style.display = "none";
-    });
-  }
-}
-              function handleOpenButtonClick() {
-          
-                const radioButtons = document.querySelectorAll('input[name="text-item"]');
-                let selectedText = '';
-                let selectedLevel = '';
-                radioButtons.forEach(radioButton => {
-                  if (radioButton.checked) {
-                    const liElement = radioButton.parentNode;
-                    selectedText = liElement.textContent.trim();
-                    localStorage.setItem('TextName', selectedText)
-          
-                  }
-                });
-                console.log(localStorage.getItem('TextLevel'));
-                const url = `http://localhost:8080/api/getTextsByLevel/${localStorage.getItem('TextLevel')}`;
-                fetch(url)
-                  .then(response => {
-                    if (response.ok) {
-                      return response.text(); // Отримати текст відповіді
-                    } else {
-                      throw new Error('Error: ' + response.status);
-                    }
-                  })
-                  .then(data => {
-                    if (data != "[]") {
-                      localStorage.setItem('TextId', getTextId(data, localStorage.getItem('TextName')));
-                      console.log(localStorage.getItem('TextId'));
-                      console.log(localStorage.getItem('TextName'));
-                    }
-                    else {
-                      localStorage.setItem('TextId', '');
-                    }
-          
-                  })
-                if (selectedText) {
-                  if (window.location.href.includes("Texts.html")) {
-                    window.location.href = "Text.html";
-                  }
-                } else {
-                  // Показати popup
-                  const popup = document.getElementById("select_text");
-                  const close = document.querySelector(".close");
-                  popup.style.display = "block";
-                  // Закрити popup при натисканні на хрестик
-                  close.addEventListener("click", function () {
-                    popup.style.display = "none";
-                  });
-                }
-              }
-              const selectElement = document.getElementById('text-level');
-          
-              selectElement.addEventListener('change', getListOfText);
-          
-          
-              function wrapTextItem(listNames) {
-                const modifiedString = listNames.replace(/\[\"|\"\]/g, '');
-                const values = modifiedString.split('","');
-          
-                let wordSpans = [];
-                let wordSpans2 = [];
-          
-                //console.log(values);
-                for (let i = 0; i < values.length; i++) {
-                  wordSpans[i] = values[i].split(',')[1];
-                }
-                //console.log(wordSpans);
-                wordSpans2 = wordSpans.map(name => `<li><input type="radio" name="text-item">${name} </li>`);
-          
-                return wordSpans2.join('');
-              }
-              function getListOfText() {
-                const textLevel = selectElement.options[selectElement.selectedIndex].textContent;
-                localStorage.setItem('TextLevel', textLevel);
-          
-                const textList = document.getElementById('text-list');
-                const url = `http://localhost:8080/api/getTextsByLevel/${textLevel}`;
-                fetch(url)
-                  .then(response => {
-                    if (response.ok) {
-                      return response.text(); // Отримати текст відповіді
-                    } else {
-                      throw new Error('Error: ' + response.status);
-                    }
-                  })
-                  .then(data => {
-                    if (data != "[]") {
-                      textList.innerHTML = wrapTextItem(data);
-          
-                    }
-                    else {
-                      textList.innerHTML = "";
-                    }
-          
-                  })
-              }
-              getListOfText();
-          
-          
-          
-            </script>
-  </body>
+    function handleOpenButtonClick() {
+
+      const radioButtons = document.querySelectorAll('input[name="text-item"]');
+      let selectedText = '';
+      let selectedLevel = '';
+      radioButtons.forEach(radioButton => {
+        if (radioButton.checked) {
+          const liElement = radioButton.parentNode;
+          selectedText = liElement.textContent.trim();
+          localStorage.setItem('TaskName', selectedText)
+
+        }
+      });
+      console.log(localStorage.getItem('TaskLevel'));
+      const url = `http://localhost:8080/api/getTextsByLevel/${localStorage.getItem('TaskLevel')}`;
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            return response.text(); // Отримати текст відповіді
+          } else {
+            throw new Error('Error: ' + response.status);
+          }
+        })
+        .then(data => {
+          // if (data != "[]") {
+            localStorage.setItem('TaskId', getTextId(data, localStorage.getItem('TaskName')));
+            console.log(localStorage.getItem('TaskId'));
+            console.log(localStorage.getItem('TaskName'));
+          // }
+          // else {
+          //   localStorage.setItem('TextId', '');
+          // }
+
+        })
+     
+        openCurTask();
+        
+      
+    }
+    const selectElement = document.getElementById('task-level');
+
+    selectElement.addEventListener('change', getListOfText);
+
+
+    function wrapTextItem(listNames) {
+      const modifiedString = listNames.replace(/\[\"|\"\]/g, '');
+      const values = modifiedString.split('","');
+
+      let wordSpans = [];
+      let wordSpans2 = [];
+
+      //console.log(values);
+      for (let i = 0; i < values.length; i++) {
+        wordSpans[i] = values[i].split(',')[1];
+      }
+      //console.log(wordSpans);
+      wordSpans2 = wordSpans.map(name => `<li><input type="radio" name="text-item">${name} </li>`);
+
+      return wordSpans2.join('');
+    }
+    function getListOfText() {
+      const textLevel = selectElement.options[selectElement.selectedIndex].textContent;
+      localStorage.setItem('TextLevel', textLevel);
+
+      const textList = document.getElementById('task-list');
+      const url = `http://localhost:8080/api/getTasksByLevel/${textLevel}`;
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            return response.text(); // Отримати текст відповіді
+          } else {
+            throw new Error('Error: ' + response.status);
+          }
+        })
+        .then(data => {
+          if (data != "[]") {
+            textList.innerHTML = wrapTextItem(data);
+
+          }
+          else {
+            textList.innerHTML = "";
+          }
+
+        })
+    }
+    getListOfText();
+
+
+
+  </script>
+</body>
+
 </html>

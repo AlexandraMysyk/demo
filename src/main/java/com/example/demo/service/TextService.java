@@ -20,7 +20,9 @@ public class TextService {
     public String getTextDao(int id) {
         return textDao.findById(id);
     }
-
+    public List<String> getTextsDao() {
+        return textDao.findAllTexts();
+    }
     @Transactional
     public Text save(Text text) {
         System.out.println("text in save 1"+ text);
@@ -33,13 +35,10 @@ public class TextService {
     }
 
     @Transactional
-    public String updateText(Text text, String content) {
-        return textDao.updateText(text, content);
+    public String updateText(Text text, String content, String name, String level) {
+        return textDao.updateText(text, content, name, level);
     }
 
-    public List<Text> getAllTexts() {
-        return textDao.findAll();
-    }
 
     public List<String> getAllByLevel(String complexityLevel) {
         return textDao.findByLevel(complexityLevel);

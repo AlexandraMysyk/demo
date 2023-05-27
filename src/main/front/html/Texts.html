@@ -60,6 +60,8 @@
 
         }
       });
+      if (selectedText) {
+
       console.log(localStorage.getItem('TextLevel'));
       const url = `http://localhost:8080/api/getTextsByLevel/${localStorage.getItem('TextLevel')}`;
       fetch(url)
@@ -71,17 +73,17 @@
           }
         })
         .then(data => {
-          if (data != "[]") {
+          // if (data != "[]") {
+            console.log("localStorage.getItem('TextName'))"+localStorage.getItem('TextName'));
             localStorage.setItem('TextId', getTextId(data, localStorage.getItem('TextName')));
             console.log(localStorage.getItem('TextId'));
             console.log(localStorage.getItem('TextName'));
-          }
-          else {
-            localStorage.setItem('TextId', '');
-          }
+          // }
+          // else {
+          //   // localStorage.setItem('TextId', '');
+          // }
 
         })
-      if (selectedText) {
         if (window.location.href.includes("Texts.html")) {
           window.location.href = "Text.html";
         }

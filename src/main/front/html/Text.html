@@ -49,7 +49,7 @@
   </form>
   <script>
 
-    import axios from "ajax";
+     // import axios from "ajax";
 
     let texts = "";
 
@@ -190,15 +190,17 @@
       const url = `http://localhost:8080/api/getTextsByLevel/${textLevel}`;
       fetch(url)
         .then(response => {
-          if (response.ok) {
-            return response.text();
-          } else {
-            throw new Error('Error: ' + response.status);
-          }
+          // if (response.ok) {
+          //   return response.text();
+          // } else {
+          //   throw new Error('Error: ' + response.status);
+          // }
         })
         .then(data => {
           if (data != "[]") {
-            texts = wrapTextItem(data);
+            // texts = wrapTextItem(data);
+            // data..map(name => `<li><input type="radio" name="text-item">${name} </li>`);
+   console.log(data);
           }
           else {
             texts.innerHTML = "";
@@ -207,33 +209,45 @@
         })
     }
     getText(localStorage.getItem('TextId'));
-    const json = JSON.stringify({ id_text: 98,
-      complexityLevel: "Intermediate",
-      content: "098765",
-      name: "wer"});
-    const res =  axios.post(`http://localhost:8080/api/addText`, json, {
-      headers: {
-        // Overwrite Axios's automatically set Content-Type
-        'Content-Type': 'application/json'
-      }
-    });
-console.log(
-    res
-    //res.data.headers['Content-Type']
-    );
-/*axios.post(`http://localhost:8080/api/addText`, {
-  "id_text": 98,
+//     const json = JSON.stringify({ id_text: 98,
+//       complexityLevel: "Intermediate",
+//       content: "098765",
+//       name: "wer"});
+//     const res =  axios.post(`http://localhost:8080/api/addText`, json, {
+//       headers: {
+//         // Overwrite Axios's automatically set Content-Type
+//         'Content-Type': 'application/json'
+//       }
+//     })
+//     .then(response => {
+//       console.log('Текст успішно додано до бази даних');
+//     })
+// console.log(
+//     res
+//     //res.data.headers['Content-Type']
+//     );
+adminId = 1;
+adminName = "alibil";
+adminPassword = "user1password";
+adminEmail = "alibil@gmail.com";
+axios.post(`http://localhost:8080/api/addText`, {
   "complexityLevel": "Intermediate",
-  "content": "098765",
-  "name": "wer"
+  "content": "content",
+  "name":"cool",
+  "admin": {
+    "id_admin" : adminId,
+    "name" : adminName,
+    "password" : adminPassword,
+    "email" : adminEmail
+  }
 }, {
   headers: {
     'Content-Type': 'application/json'
   }
-});
+})
   .then(response => {
     console.log('Текст успішно додано до бази даних');
-  })*/
+  })
   // .catch(error => {
   //   console.error('Помилка при додаванні тексту до бази даних', error);
   // }

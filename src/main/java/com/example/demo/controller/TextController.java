@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entities.Admin;
 import com.example.demo.entities.Text;
+import com.example.demo.service.AdminService;
 import com.example.demo.service.TextService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:63342")
 public class TextController {
     private final TextService textService;
 
@@ -26,11 +28,17 @@ public class TextController {
         this.textService = textService;
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping(path = "/getTexts")
+    public ResponseEntity<List<String>> getTextsById() {
+        return new ResponseEntity<>(textService.getTextsDao(), HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(path = "/getText/{id}")
     public ResponseEntity<String> getTextById(@PathVariable int id) {
         return new ResponseEntity<>(textService.getTextDao(id), HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(path = "/getTextsByLevel/{level}")
     public ResponseEntity<List<String>> getTextsByLevel(@PathVariable String level) {
         return new ResponseEntity<>(textService.getAllByLevel(level), HttpStatus.OK);
@@ -44,21 +52,21 @@ public class TextController {
     public ResponseEntity<Text> addText(@RequestBody Text text) {
 //        -- use StudyHub;
 //insert into admin(id_admin, name, password, email) value(5,'alinochka', 'alinochkapas', 'alinochka@gmail.com');
-        int id = 5;
-        String name= "alinochka";
-        String password = "alinochkapas";
-        String email = "alinochka@gmail.com";
-        Admin a=new Admin(id, name, password, email);
-        text.setAdmin(a);
-        System.out.println("getComplexityLevel "+ text);
-        System.out.println("getComplexityLevel "+ text.getComplexityLevel());text.setComplexityLevel("a1");
-        System.out.println("getComplexityLevel "+ text.getComplexityLevel());
+//        int id = 5;
+//        AdminService adminService = new AdminService();
+//        adminService.getAdminById(id);
+//        String name= "alinochka";
+//        String password = "alinochkapas";
+//        String email = "alinochka@gmail.com";
+//        Admin a=new Admin(id, name, password, email);
+//        text.setAdmin(a);
+
         return new ResponseEntity<>(textService.save(text), HttpStatus.OK);
     }
 //
 
     @PutMapping(path = "/editText")
-    public ResponseEntity<String> editText(@RequestBody Text text, @RequestBody String content) {
-        return new ResponseEntity<>(textService.updateText(text, content), HttpStatus.OK);
+    public ResponseEntity<String> editText(@RequestBody Text text, @RequestBody String content,@RequestBody String name,@RequestBody String level) {
+        return new ResponseEntity<>(textService.updateText(text, content, name, level), HttpStatus.OK);
     }
 }

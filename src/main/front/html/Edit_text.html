@@ -39,7 +39,8 @@
 		</div>
 	</form>
 	<script>
-		fillForm();
+		console.log(JSON.parse(localStorage.getItem("jsonText")));
+		fillForm(JSON.parse(localStorage.getItem("jsonText")));
 	  </script>
 </body>
 </html>

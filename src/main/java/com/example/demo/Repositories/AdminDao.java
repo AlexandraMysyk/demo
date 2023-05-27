@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdminDao extends JpaRepository<Admin, Integer> {
-@Query(value="SELECT id_admin, email, name, password FROM admin WHERE email=?",nativeQuery = true)
-    Admin findByEmail(String email);
+@Query(value="SELECT id_admin FROM admin WHERE email=? and password=?",nativeQuery = true)
+    int findByEmail(String email,String password);
+    @Query(value="SELECT * FROM admin WHERE id_admin=?",nativeQuery = true)
+    Admin findById(int id);
+
 }

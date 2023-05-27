@@ -1,45 +1,104 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>List of texts</title>
-	<link rel="stylesheet" href="../css/style.css">
-	<script src="../scripts/script.js"></script>
-</head>
-<body>
-	<div id="select_text" class="popup">
-		<div class="popup-content">
-		  <span class="close">&times;</span>
-		  <h2>Select the text</h2>
-		</div>
-	  </div>
-	  <div id="delete_text" class="popup">
-		<div class="popup-content">
-		  <span class="close"> </span>
-		  <h2>Are you sure you want to delete the text?</h2>
-		  <div class="buttons">
-				<button class="confirm-btn" onclick="deleteText()">Confirm</button>
-				<button class="cancel-btn" onclick="open_list_text()">Cancel</button>
-		</div>
-		</div>
-	  </div>
-	<header>
-		<ul class="tab-container">
-			<li><a href="Add_text.html">Add Text</a></li>
-			<li><a class="active" href="List_of_texts.html">List of texts</a></li>
-		</ul>
-	</header>
-    <h1>List of texts</h1>
-	<form class="form-container">
-		<ul id="text-list">
-			<li><input type="radio" name="text-item">Text Text Text Text</li>
-			<li><input type="radio" name="text-item">Text2</li>
-			<li><input type="radio" name="text-item">Text 5</li>
-		</ul>
-		<div class="buttons">
-            <button type="button" class="delete-btn" onclick="handleDeleteButtonClick()">Delete</button>
-            <button type="button" id="editButton" onclick="handleEditButtonClick()">Edit</button>
-		</div>
-	</form>
 
+<head>
+  <title>List of texts</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../scripts/script.js"></script>
+</head>
+
+<body>
+  <div id="select_text" class="popup">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <h2>Select the text</h2>
+    </div>
+  </div>
+  <div id="delete_text" class="popup">
+    <div class="popup-content">
+      <span class="close"> </span>
+      <h2>Are you sure you want to delete the text?</h2>
+      <div class="buttons">
+        <button class="confirm-btn" onclick="deleteText()">Confirm</button>
+        <button class="cancel-btn" onclick="open_list_text()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <header>
+    <ul class="tab-container">
+      <li><a href="Add_text.html">Add Text</a></li>
+      <li><a class="active" href="List_of_texts.html">List of texts</a></li>
+    </ul>
+  </header>
+  <h1>List of texts</h1>
+  <form class="form-container">
+    <ul id="text-list">
+
+    </ul>
+    <div class="buttons">
+      <button type="button" class="delete-btn" onclick="handleDeleteButtonClick()">Delete</button>
+      <button type="button" id="editButton" onclick="handleEditButtonClick()">Edit</button>
+    </div>
+  </form>
+  <script>
+
+    function wrapText(listNames) {
+      // console.log(listNames);
+      var wordSpans = [];
+      var wordSpans2 = [];
+      for (let i = 0; i < listNames.length; i++) {
+        wordSpans[i] = listNames[i].name;
+      }
+
+      wordSpans2 = wordSpans.map(name => `<li><input type="radio" name="text-item">${name} </li>`);
+      // console.log(wordSpans);
+      return wordSpans2.join('');
+    }
+    function getListOfText() {
+      const textList = document.getElementById('text-list');
+      const url = `http://localhost:8080/api/getTexts`;
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            return response.text(); // Отримати текст відповіді
+          } else {
+            throw new Error('Error: ' + response.status);
+          }
+        })
+        .then(data => {
+          if (data != "[]") {
+            // console.log(data);
+            textList.innerHTML = wrapText(parseStrToJson(data));
+            localStorage.setItem("jsonTexts",JSON.stringify(parseStrToJson(data)));
+           
+
+          }
+          else {
+            textList.innerHTML = "";
+          }
+
+        })
+    }
+    function parseStrToJson(inputString) {
+
+      const items = inputString.slice(1, -1).split('","');
+
+      // Convert each item into an array
+      const itemArrays = items.map(item => item.split(','));
+
+      // Create an array of objects with the specified keys
+      const result = itemArrays.map(item => ({
+        id_text: item[0],
+        complexityLevel: item[1],
+        content: item.slice(2, -3).join(','),
+        name: item[item.length - 2],
+        id_admin: item[item.length - 1]
+      }));
+
+      return result;
+    }
+    getListOfText();
+  </script>
 </body>
-</html> 
+
+</html>

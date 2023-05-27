@@ -16,8 +16,15 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping("/checkAdminIfExists/{email}")
-    public ResponseEntity<Admin> checkAdminIfExists(@RequestBody @PathVariable String email){
-        return new ResponseEntity<>(adminService.getAdminByEmail(email), HttpStatus.OK);
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping("/checkAdminIfExists/{email}/{password}")
+    public ResponseEntity<Integer> checkAdminIfExists(@RequestBody @PathVariable String email,@RequestBody @PathVariable  String password){
+        return new ResponseEntity<>(adminService.getAdminByEmail(email, password),HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping("/checkAdmin/{id}")
+    public ResponseEntity<Admin> checkAdminIfExists(@RequestBody @PathVariable int id){
+        return new ResponseEntity<>(adminService.getAdminById(id),HttpStatus.OK);
     }
 }

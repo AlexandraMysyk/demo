@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Add text</title>
 	<link rel="stylesheet" type="text/css" href="../css/Add_text.css">
 	<link rel="stylesheet" href="../css/style.css">
 	<script src="../scripts/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body>
 	<header>
 		<ul class="tab-container">
@@ -14,7 +19,13 @@
 		</ul>
 	</header>
 	<h1>Add Text</h1>
-	<form class="form-container">
+	<div id="select_task" class="popup">
+		<div class="popup-content">
+		  <span class="close">&times;</span>
+		  <h2>Added text</h2>
+		</div>
+	</div>
+	<form class="form-container" onsubmit="return validateForm()">
 		<label for="text-name">Text Name:</label>
 		<input type="text" id="text-name" name="text-name" required minlength="3">
 
@@ -27,15 +38,97 @@
 			<option value="upper-intermediate">Upper Intermediate</option>
 			<option value="advanced">Advanced</option>
 			<option value="profficiency">Profficiency</option>
-		  </select>
+		</select>
 
 		<label for="text">Text:</label>
 		<textarea id="text" name="text" required minlength="50"></textarea>
 
 		<div class="buttons">
-			<button type="submit" id="confirm-btn" onclick="addTextToDataBase()">Confirm</button>
+			<button type="submit" id="confirm-btn"">Confirm</button>
 			<button type="button" id="cancel-btn" onclick="clearFields()">Cancel</button>
 		</div>
 	</form>
+	<script>
+		document.querySelector('.form-container').addEventListener('submit', function(event) {
+    // Prevent the form from submitting
+    event.preventDefault();
+  
+    // Validate the form fields
+    if (validateForm()) {
+        // If the form is valid, call the addTextToDataBase() function
+        addTextToDataBase();
+    }
+});
+		function validateForm() {
+  // Отримання значень полів форми
+  var textName = document.getElementById("text-name").value;
+  var textLevel = document.getElementById("text-level").value;
+  var text = document.getElementById("text").value;
+
+  // Перевірка коректності полів
+  if (textName.length < 3 || textLevel === "" || text.length < 50) {
+    // Поле(я) некоректне, виводимо повідомлення про помилку
+    alert("Будь ласка, заповніть всі поля коректно.");
+    return false; // Форма не буде надіслана
+  }
+
+  // Всі поля коректні, форму можна надсилати
+  return true;
+}
+		function addTextToDataBase() {
+			var adminName;
+			var adminPassword;
+			var adminEmail;
+			var adminId = 1;
+			const url = `http://localhost:8080/api/checkAdmin/${adminId}`;
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            return response.text(); // Отримати текст відповіді
+          } else {
+            throw new Error('Error: ' + response.status);
+          }
+        })
+        .then(data => {
+          if (data != "[]") {
+            
+			adminName = JSON.parse(data).name;
+			adminPassword = JSON.parse(data).password;
+			adminEmail = JSON.parse(data).email;
+			adminId = JSON.parse(data).id_admin;
+			content = document.getElementById("text").value;
+			name = document.getElementById("text-name").value;
+			level = document.getElementById("text-level").value;
+			console.log(adminId);
+		
+			axios.post(`http://localhost:8080/api/addText`, {
+				"complexityLevel": level,
+				"content": content,
+				"name": name,
+				"admin": {
+					"id_admin": adminId,
+					"name": adminName,
+					"password": adminPassword,
+					"email": adminEmail
+				}
+			}, {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then(response => {
+					clearFieldsAfter();
+				})
+          }
+          else {
+            textList.innerHTML = "";
+          }
+
+        })
+
+
+		}
+	</script>
 </body>
+
 </html>

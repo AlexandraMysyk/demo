@@ -18,8 +18,8 @@ public class Admin implements Serializable {
     private String password;
 
     private String email;
-    @OneToMany(mappedBy = "admin")
-    private List<Text> textList;
+//    @OneToMany(mappedBy = "admin")
+//    private List<Text> textList;
 
     public Admin() {
     }
@@ -67,13 +67,13 @@ public class Admin implements Serializable {
         this.email = email;
     }
 
-    public List<Text> getTextList() {
-        return textList;
-    }
-
-    public void setTextList(List<Text> textList) {
-        this.textList = textList;
-    }
+//    public List<Text> getTextList() {
+//        return textList;
+//    }
+//
+//    public void setTextList(List<Text> textList) {
+//        this.textList = textList;
+//    }
 
     @Override
     public String toString() {
@@ -82,7 +82,7 @@ public class Admin implements Serializable {
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", textList=" + textList +
+//                ", textList=" + textList +
                 '}';
     }
 }

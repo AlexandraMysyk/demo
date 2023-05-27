@@ -26,8 +26,9 @@ public class UserController {
     public ResponseEntity<User> editUser(@RequestBody User userNew, @RequestBody  int id) {
         return new ResponseEntity<>(userService.editUser(userNew, id), HttpStatus.CREATED);
     }
-    @GetMapping("/checkUserIfExists/{email}")
-    public ResponseEntity<User> checkUserIfExists(@RequestBody @PathVariable String email){
-        return new ResponseEntity<>(userService.getUserByEmail(email),HttpStatus.OK);
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping("/checkUserIfExists/{email}/{password}")
+    public ResponseEntity<String> checkUserIfExists(@RequestBody @PathVariable String email,@RequestBody @PathVariable  String password){
+        return new ResponseEntity<>(userService.getUserByEmail(email, password),HttpStatus.OK);
     }
 }

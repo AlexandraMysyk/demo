@@ -19,8 +19,8 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-
-    @GetMapping(path = "/getTasksByLevel/{level}/{user}", produces = "taskbylevel/json")
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping(path = "/getTasksByLevel/{level}/{user}")
     public ResponseEntity<List<String>> getTasksByLevel(@PathVariable String level,@PathVariable int idUser) {
         return new ResponseEntity<>(taskService.getAllByLevel(level,idUser), HttpStatus.OK);
     }

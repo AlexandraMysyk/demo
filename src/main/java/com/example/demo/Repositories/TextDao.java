@@ -12,11 +12,13 @@ public interface TextDao extends JpaRepository<Text, Integer> {
     @Query(value = "SELECT id_text, name  FROM text WHERE complexity_level=?", nativeQuery = true)
     List<String> findByLevel(String complexityLevel);
 
-    @Query(value = "UPDATE ? SET content=?", nativeQuery = true)
-    String updateText(Text text, String content);
+    @Query(value = "UPDATE ? SET content=? and name=? and complexity_level=?", nativeQuery = true)
+    String updateText(Text text, String content, String name, String level);
 
     @Query(value = "SELECT * FROM text WHERE id_text=?", nativeQuery = true)
     String findById(int id);
+    @Query(value = "SELECT * FROM text", nativeQuery = true)
+    List<String> findAllTexts();
 
     @Query(value = "SELECT id_text FROM text WHERE name=?", nativeQuery = true)
     String findByName(String name);

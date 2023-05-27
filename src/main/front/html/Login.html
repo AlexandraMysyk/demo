@@ -1,20 +1,91 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Login Page</title>
 	<link rel="stylesheet" type="text/css" href="../css/Login.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter&family=Raleway&display=swap" rel="stylesheet">
 </head>
+
 <body>
+	<div id="select_text" class="popup">
+		<div class="popup-content">
+			<span class="close">&times;</span>
+			<h2>Wrong data</h2>
+		</div>
+	</div>
 	<h1>Login Form</h1>
 	<form>
 		<label for="email">Email:</label>
-		<input type="email" id="email" name="email" placeholder="Enter your email" pattern="[a-z0-9._%+-]+@gmail\.com$" required>
+		<input type="email" id="email" name="email"
+			placeholder="Enter your email"><!-- pattern="[a-z0-9._%+-]+@gmail\.com$" required>-->
 		<label for="password">Password:</label>
-		<input type="password" id="password" name="password" placeholder="Enter your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[~!@#$%^&*_]).{6,}" required>
-		<button type="submit" id="Login-btn" >Login</button>
+		<input type="password" id="password" name="password"
+			placeholder="Enter your password"><!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[~!@#$%^&*_]).{6,}" required> -->
+		<button type="submit" id="Login-btn" onclick="event.preventDefault();Login()">Login</button>
 	</form>
+	<script>
+
+		function Login() {
+			const url = `http://localhost:8080/api/checkUserIfExists/${document.getElementById("email").value}/${document.getElementById("password").value}`;
+			fetch(url)
+				.then(response => {
+					if (response.ok) {
+						return response.text(); // Отримати текст відповіді
+					} else {
+						throw new Error('Error: ' + response.status);
+					}
+				})
+				.then(data => {
+					if (data != "[]" && data != "" && data != undefined) {
+
+						localStorage.setItem('user', true);
+						localStorage.setItem('admin', false);
+						window.location.href = "Texts.html";
+					}
+					else {
+						localStorage.setItem('user', false);
+						localStorage.setItem('admin', false);
+						const url = `http://localhost:8080/api/checkAdminIfExists/${document.getElementById("email").value}/${document.getElementById("password").value}`;
+						fetch(url)
+							.then(response => {
+								if (response.ok) {
+									return response.text(); // Отримати текст відповіді
+								} else {
+									throw new Error('Error: ' + response.status);
+								}
+							})
+							.then(data => {
+								if (data != "[]" && data != "" && data != undefined) {
+
+									localStorage.setItem('user', false);
+									localStorage.setItem('adminId', data);
+									window.location.href = "Add_text.html";
+								}
+								else {
+									localStorage.setItem('user', false);
+									localStorage.setItem('admin', false);
+									const popup = document.getElementById("select_text");
+									const close = document.querySelector(".close");
+									popup.style.display = "block";
+									// Закрити popup при натисканні на хрестик
+									close.addEventListener("click", function () {
+										popup.style.display = "none";
+									});
+
+								}
+
+							})
+					}
+
+				})
+		}
+
+	</script>
+
 </body>
+
 </html>

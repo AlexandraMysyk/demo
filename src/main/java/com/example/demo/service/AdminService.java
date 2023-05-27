@@ -16,8 +16,13 @@ public class AdminService {
     public AdminService(AdminDao adminDao) {
         this.adminDao = adminDao;
     }
-    public Admin getAdminByEmail(String email){
-        return adminDao.findByEmail(email);
+
+
+    public int getAdminByEmail(String email, String password){
+        return adminDao.findByEmail(email, password);
+    }
+    public Admin getAdminById(int id){
+        return adminDao.findById(id);
     }
 
     @Transactional
