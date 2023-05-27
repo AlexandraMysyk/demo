@@ -35,8 +35,8 @@ public class TextService {
     }
 
     @Transactional
-    public String updateText(Text text, String content, String name, String level) {
-        return textDao.updateText(text, content, name, level);
+    public String updateText(String content, String name, String level, int id) {
+        return textDao.updateText(content, name, level, id);
     }
 
 

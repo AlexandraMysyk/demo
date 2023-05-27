@@ -66,7 +66,7 @@ public class TextController {
 //
 
     @PutMapping(path = "/editText")
-    public ResponseEntity<String> editText(@RequestBody Text text, @RequestBody String content,@RequestBody String name,@RequestBody String level) {
-        return new ResponseEntity<>(textService.updateText(text, content, name, level), HttpStatus.OK);
+    public ResponseEntity<String> editText(@RequestBody String content,@RequestBody String name,@RequestBody String level, @RequestBody int id) {
+        return new ResponseEntity<>(textService.updateText(content, name, level,id), HttpStatus.OK);
     }
 }
