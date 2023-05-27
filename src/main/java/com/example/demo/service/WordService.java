@@ -16,6 +16,7 @@ public class WordService {
     public WordService(WordDao wordDao) {
         this.wordDao = wordDao;
     }
+    public List<String> getAllWordsByEmail(String email){return wordDao.getAllWordsByEmail(email);}
 
     public Optional<Word> getWordDao(int id) {
         return wordDao.findById(id);
