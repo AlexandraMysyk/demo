@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface TaskDao extends JpaRepository<Task, Integer> {
-    @Query(value = "SELECT * FROM task WHERE complexity_level=?1", nativeQuery = true)
-    List<Task> findByLevel(String complexityLevel);
+    @Query(value = "SELECT task.answer, task.complexity_level, task.task_content FROM task,task_to_user WHERE task.id_task=task_to_user.task_id_task and task.complexity_level=? and task_to_user.user_id_user=? ", nativeQuery = true)
+    <idUser>
+    List<String> findByLevel(String complexityLevel , int idUser);
 }
