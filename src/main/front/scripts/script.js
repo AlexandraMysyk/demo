@@ -1,3 +1,4 @@
+
 function clearFieldsAfter() {
   const popup = document.getElementById("select_task");
   const close = document.querySelector(".close");
@@ -22,7 +23,27 @@ function addText() {
 
 }
 function deleteText() {
-  console.log(JSON.parse(localStorage.getItem("jsonTexts"))[getTextIndex()]);
+  data = JSON.parse(localStorage.getItem("jsonTexts"))[getTextIndex()];
+  localStorage.setItem("jsonText", JSON.stringify(data));
+
+  data = JSON.parse(localStorage.getItem("jsonText"))
+  id = data.id_text;
+  console.log(id);
+  axios.post(`http://localhost:8080/api/deleteText`,
+    id,
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const popup = document.getElementById("select_text");
+    const close = document.querySelector(".close");
+    popup.style.display = "block";
+    // Закрити popup при натисканні на хрестик
+    close.addEventListener("click", function () {
+      popup.style.display = "none";
+    });
+    open_list_text();
 }
 
 function getTextIndex() {
@@ -48,10 +69,12 @@ function viewText() {
 }
 //add realisation
 function open_list_text() {
-  if (window.location.href.includes("Edit_text.html")) {
-    window.location.href = "List_of_texts.html";
-  } else if (window.location.href.includes("Text.html")) {
+
+  if (window.location.href.includes("Text.html")) {
     window.location.href = "Texts.html";
+  }
+  else{
+    window.location.href = "List_of_texts.html";
   }
 
 }
@@ -60,14 +83,61 @@ function returnToTaskList() {
     window.location.href = "Tasks.html";
   }
 }
-function editText() { }
+function editText() {
+  // @PutMapping(path = "/editText")
+  // public ResponseEntity<String> editText(@RequestBody String content,@RequestBody String name,@RequestBody String level, @RequestBody int id) {
+  //     return new ResponseEntity<>(textService.updateText(content, name, level,id), HttpStatus.OK);
+  // }
+  var adminName;
+  var adminPassword;
+  var adminEmail;
+  var adminId = 1;
+  const url = `http://localhost:8080/api/checkAdmin/${adminId}`;
+  fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.text(); // Отримати текст відповіді
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    })
+    .then(data => {
+      if (data != "[]") {
+        adminName = JSON.parse(data).name;
+        adminPassword = JSON.parse(data).password;
+        adminEmail = JSON.parse(data).email;
+        adminId = JSON.parse(data).id_admin;
+        data = JSON.parse(localStorage.getItem("jsonText"))
+        id = data.id_text;
+        content = document.getElementById("text").value;
+        name = document.getElementById("text-name").value;
+        level = document.getElementById("text-level").value;
+        console.log(id);
+        data = JSON.parse(localStorage.getItem("jsonText"))
+        id = data.id_text;
+        axios.post(`http://localhost:8080/api/deleteText`,
+          id,
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+
+      }
+      else {
+        textList.innerHTML = "";
+      }
+
+    })
+
+}
 function handleEditButtonClick() {
   const selectedText = document.querySelector('input[name="text-item"]:checked');
 
   if (selectedText) {
     const data = JSON.parse(localStorage.getItem("jsonTexts"))[getTextIndex()];
-    localStorage.setItem("jsonText",JSON.stringify(data));
-           
+    localStorage.setItem("jsonText", JSON.stringify(data));
+
     window.location.href = "Edit_text.html";
 
     // document.addEventListener("DOMContentLoaded", function () {

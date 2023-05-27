@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Add text</title>
 	<link rel="stylesheet" type="text/css" href="../css/Add_text.css">
 	<link rel="stylesheet" href="../css/style.css">
 	<script src="../scripts/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 </head>
+
 <body>
 	<header>
 		<ul class="tab-container">
@@ -19,28 +25,103 @@
 		<input type="text" id="text-name" name="text-name" required minlength="3">
 
 		<label for="text-level">Text Level:</label>
-      <select id="text-level" name="text-level" required>
-        <option value="">--Select--</option>
-        <option value="beginner">Beginner</option>
-        <option value="pre-intermediate">Pre Intermediate</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="upper-intermediate">Upper Intermediate</option>
-        <option value="advanced">Advanced</option>
-        <option value="profficiency">Profficiency</option>
-      </select>
+		<select id="text-level" name="text-level" required>
+			<option value="">--Select--</option>
+			<option value="beginner">Beginner</option>
+			<option value="pre-intermediate">Pre Intermediate</option>
+			<option value="intermediate">Intermediate</option>
+			<option value="upper-intermediate">Upper Intermediate</option>
+			<option value="advanced">Advanced</option>
+			<option value="profficiency">Profficiency</option>
+		</select>
 
 		<label for="text">Text:</label>
 		<textarea id="text" name="text" required minlength="50"></textarea>
 
 		<div class="buttons">
-			<button type="submit" id="confirm-btn" onclick="editText()">Confirm</button>
+			<button type="submit" id="confirm-btn" onclick="event.preventDefault();editText()">Confirm</button>
 			<button type="button" id="cancel-btn" onclick="fillForm()">Cancel</button>
 			<button type="button" id="go-to-list" onclick="open_list_text()">Return to list</button>
 		</div>
 	</form>
 	<script>
+		function deleteText() {
+			data = JSON.parse(localStorage.getItem("jsonText"))
+			id = data.id_text;
+			axios.post(`http://localhost:8080/api/deleteText`,
+				id,
+				{
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
+			const popup = document.getElementById("select_text");
+			const close = document.querySelector(".close");
+			popup.style.display = "block";
+			// Закрити popup при натисканні на хрестик
+			close.addEventListener("click", function () {
+				popup.style.display = "none";
+			});
+		}
 		console.log(JSON.parse(localStorage.getItem("jsonText")));
 		fillForm(JSON.parse(localStorage.getItem("jsonText")));
-	  </script>
+		function editText() {
+			// @PutMapping(path = "/editText")
+			// public ResponseEntity<String> editText(@RequestBody String content,@RequestBody String name,@RequestBody String level, @RequestBody int id) {
+			//     return new ResponseEntity<>(textService.updateText(content, name, level,id), HttpStatus.OK);
+			// }
+			var adminName;
+			var adminPassword;
+			var adminEmail;
+			var adminId = localStorage.getItem("adminId");
+			const url = `http://localhost:8080/api/checkAdmin/${adminId}`;
+			fetch(url)
+				.then(response => {
+					if (response.ok) {
+						return response.text(); // Отримати текст відповіді
+					} else {
+						throw new Error('Error: ' + response.status);
+					}
+				})
+				.then(data => {
+					if (data != "[]") {
+						adminName = JSON.parse(data).name;
+						adminPassword = JSON.parse(data).password;
+						adminEmail = JSON.parse(data).email;
+						adminId = JSON.parse(data).id_admin;
+						data = JSON.parse(localStorage.getItem("jsonText"))
+						id = data.id_text;
+						content = document.getElementById("text").value;
+						name = document.getElementById("text-name").value;
+						level = document.getElementById("text-level").value;
+						console.log(data);
+
+						axios.post(`http://localhost:8080/api/editText`, {
+							"complexityLevel": level,
+							"content": content,
+							"name": name,
+							"admin": {
+								"id_admin": adminId,
+								"name": adminName,
+								"password": adminPassword,
+								"email": adminEmail
+							},
+								headers: {
+									'Content-Type': 'application/json'
+								}
+							})
+							.then(response => {
+								// clearFieldsAfter();
+							})
+					}
+					else {
+						textList.innerHTML = "";
+					}
+
+				})
+
+		}
+	</script>
 </body>
+
 </html>

@@ -35,10 +35,17 @@ public class TextService {
     }
 
     @Transactional
-    public String updateText(String content, String name, String level, int id) {
-        return textDao.updateText(content, name, level, id);
+    public Text updateText(Text text) {
+        return textDao.saveAndFlush(text);
     }
-
+//    public void updateRow(Long id, String newValue) {
+//        Optional<YourEntity> optionalEntity = repository.findById(id);
+//        if (optionalEntity.isPresent()) {
+//            YourEntity entity = optionalEntity.get();
+//            entity.setSomeProperty(newValue);
+//            repository.save(entity);
+//        }
+//    }
 
     public List<String> getAllByLevel(String complexityLevel) {
         return textDao.findByLevel(complexityLevel);

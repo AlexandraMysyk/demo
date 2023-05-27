@@ -64,12 +64,13 @@ public class TextController {
         return new ResponseEntity<>(textService.save(text), HttpStatus.OK);
     }
 //
-
-    @PutMapping(path = "/editText")
-    public ResponseEntity<String> editText(@RequestBody String content,@RequestBody String name,@RequestBody String level, @RequestBody int id) {
-        return new ResponseEntity<>(textService.updateText(content, name, level,id), HttpStatus.OK);
+@CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping(path = "/editText")
+    public ResponseEntity<Text> editText(@RequestBody Text text) {
+        return new ResponseEntity<>(textService.updateText(text), HttpStatus.OK);
     }
-    @DeleteMapping(path="/deleteText")
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping(path="/deleteText")
     public ResponseEntity<Object> deleteText(@RequestBody int id){
         try {
             textService.deleteTextById(id);

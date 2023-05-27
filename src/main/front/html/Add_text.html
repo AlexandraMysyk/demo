@@ -44,11 +44,12 @@
 		<textarea id="text" name="text" required minlength="50"></textarea>
 
 		<div class="buttons">
-			<button type="submit" id="confirm-btn"">Confirm</button>
+			<button type="submit" id="confirm-btn">Confirm</button>
 			<button type="button" id="cancel-btn" onclick="clearFields()">Cancel</button>
 		</div>
 	</form>
 	<script>
+		editText();
 		document.querySelector('.form-container').addEventListener('submit', function(event) {
     // Prevent the form from submitting
     event.preventDefault();
@@ -75,6 +76,7 @@
   // Всі поля коректні, форму можна надсилати
   return true;
 }
+
 		function addTextToDataBase() {
 			var adminName;
 			var adminPassword;
