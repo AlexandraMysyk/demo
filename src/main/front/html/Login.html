@@ -28,7 +28,44 @@
 		<button type="submit" id="Login-btn" onclick="event.preventDefault();Login()">Login</button>
 	</form>
 	<script>
-
+		function convertStringAdminToJson(str) {
+  const values = str.split(","); // Розділяємо рядок на окремі значення
+  
+  const obj = {
+	// "1,alibil@gmail.com,alina,12MyPassmord!),1,null,1,1"
+    value1: parseInt(values[0]), // Перше значення у форматі числа
+    email: values[1], // Друге значення як рядок
+    name: values[2], // Третє значення як рядок
+    password: values[3], // Четверте значення як рядок
+    value5: parseInt(values[4]), // П'яте значення у форматі числа
+    value6: values[5] === "null" ? null : parseInt(values[5]), // Шосте значення як число або null, якщо рядок "null"
+    value7: parseInt(values[6]), // Сьоме значення у форматі числа
+    value8: parseInt(values[7]) // Восьме значення у форматі числа
+  };
+  
+  const jsonStr = JSON.stringify(obj); // Серіалізуємо об'єкт у JSON-рядок
+  
+  return jsonStr;
+}
+function convertStringUserToJson(str) {
+  const values = str.split(","); // Розділяємо рядок на окремі значення
+  
+  const obj = {
+	// "1,alibil@gmail.com,alina,12MyPassmord!),1,null,1,1"
+    id: parseInt(values[0]), // Перше значення у форматі числа
+    email: values[1], // Друге значення як рядок
+    name: values[2], // Третє значення як рядок
+    password: values[3], // Четверте значення як рядок
+    value5: parseInt(values[4]), // П'яте значення у форматі числа
+    value6: values[5] === "null" ? null : parseInt(values[5]), // Шосте значення як число або null, якщо рядок "null"
+    value7: parseInt(values[6]), // Сьоме значення у форматі числа
+    value8: parseInt(values[7]) // Восьме значення у форматі числа
+  };
+  
+  const jsonStr = JSON.stringify(obj); // Серіалізуємо об'єкт у JSON-рядок
+  
+  return jsonStr;
+}
 		function Login() {
 			const url = `http://localhost:8080/api/checkUserIfExists/${document.getElementById("email").value}/${document.getElementById("password").value}`;
 			fetch(url)
@@ -44,7 +81,8 @@
 
 						localStorage.setItem('user', true);
 						localStorage.setItem('admin', false);
-						localStorage.setItem('userId', data);
+						localStorage.setItem('user', convertStringUserToJson(data));
+						localStorage.setItem('userId', convertStringUserToJson(data).id);
 						window.location.href = "Texts.html";
 					}
 					else {

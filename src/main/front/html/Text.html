@@ -123,11 +123,14 @@
           console.log(localStorage.getItem("definition"));
           console.log(localStorage.getItem("translatedText"));
 
-          co.log(localStorage.getItem(""));
+          // console.log(localStorage.getItem(""));
 
-          if (localStorage.getItem("m_word") != null && localStorage.getItem("definition") != null && localStorage.getItem("translatedText") != null) { addWordToDB(content, localStorage.getItem("m_word")); }
+          if (localStorage.getItem("m_word") != null && localStorage.getItem("definition") != null && localStorage.getItem("translatedText") != null) {
+             addWordToDB(content, localStorage.getItem("m_word")); 
+            }
         })
         .catch(error => {
+          console.log(error);
           // Обробка помилок
         });
     }
@@ -150,6 +153,10 @@
           console.log('слово успішно додано до бази даних');
           addTaskToDB(content);
         })
+        .catch(error => {
+          console.log(error);
+          // Обробка помилок
+        });
     }
     function getTaskContent(text, word) {
       var regex = new RegExp(word, 'gi');
@@ -185,8 +192,14 @@
               localStorage.setItem("definition", null);
               localStorage.setItem("translatedText", null);
               console.log('завдання 1: успішно додано до бази даних');
-            })
-        })
+            }).catch(error => {
+          console.log(error);
+          // Обробка помилок
+        });
+        }).catch(error => {
+          console.log(error);
+          // Обробка помилок
+        });
     }
     function findSentencesWithWord(text, word) {
       // Split the text into sentences using punctuation marks as delimiters
