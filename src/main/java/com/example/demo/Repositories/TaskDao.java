@@ -21,6 +21,6 @@ public interface TaskDao extends JpaRepository<Task, Integer> {
     List<String> getAllByUser(int idUser);
     @Modifying
     @Transactional
-    @Query(value="INSERT INTO task(id_task,answer,complexity_level,name, task_content, id_kot,mark,id_user) VALUES (?,?,?,?,?,?,?,?)", nativeQuery = true)
-    Task saveTaskById(int idTask, String answer, String complexity_level, String name, String task_content, int id_kot, int mark, int idUser);
+    @Query(value="UPDATE task SET id_user=? WHERE id_task=?", nativeQuery = true)
+    Task saveTaskById( int idUser, int idTask);
 }
