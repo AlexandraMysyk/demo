@@ -138,10 +138,10 @@
     }
     function getListOfText() {
       const textLevel = selectElement.options[selectElement.selectedIndex].textContent;
-      localStorage.setItem('TextLevel', textLevel);
+      localStorage.setItem('TaskLevel', textLevel);
 
       const textList = document.getElementById('task-list');
-      const url = `http://localhost:8080/api/getTasksByLevel/${textLevel}`;
+      const url = `http://localhost:8080/api/getTasksByLevel/${textLevel}/${localStorage.getItem("userId")}`;
       fetch(url)
         .then(response => {
           if (response.ok) {
