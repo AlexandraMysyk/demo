@@ -3,7 +3,6 @@ package com.example.demo.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 public class Task implements Serializable {
@@ -105,8 +104,8 @@ public class Task implements Serializable {
         this.name = name;
     }
 
-    public User getId_user() {
-        return id_user;
+    public int getId_user() {
+        return id_user.getId_user();
     }
 
     public void setId_user(User id_user) {

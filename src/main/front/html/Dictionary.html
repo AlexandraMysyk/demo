@@ -152,7 +152,7 @@ function fillWordTable() {
   wordTable.innerHTML = '';
   
   // Загрузка JSON-даних (припустимо, що дані містяться у файлі words.json)
-  fetch(`http://localhost:8080/api/getAllWords/${localStorage.getItem("userId")}`)
+  fetch(`http://localhost:8080/api/getAllWords/${JSON.parse(localStorage.getItem("user")).id}`)
     .then(response => response.json())
     .then(data => {
       // Проітерування об'єкта зі словами та додавання їх до таблички

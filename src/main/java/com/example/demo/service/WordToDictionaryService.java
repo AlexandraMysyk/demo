@@ -15,6 +15,6 @@ public class WordToDictionaryService {
     }
     @Transactional
     public void insertByUserId(Word word, int userId, int wordToDictId ){
-        wordToDictionaryDao.insertByUserId(wordToDictId,userId,word.getMeaning(),word.getName(),word.getPicture(),word.getTranslation(),word.getContent());
+        wordToDictionaryDao.insertByUserId(wordToDictId,userId,word.getMeaning(),word.getName(),word.getPicture(),word.getTranslation(),word.getContent(), word.getId_word(),userId);
     }
 }

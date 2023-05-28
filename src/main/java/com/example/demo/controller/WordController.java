@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class WordController {
     private final WordService wordService;
+
     @Autowired
 
     public WordController(WordService wordService) {
@@ -27,6 +28,7 @@ public class WordController {
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping( "/addWord")
     public ResponseEntity<Word> addWord(@RequestBody Word word) {
+
         return new ResponseEntity<>(wordService.save(word), HttpStatus.OK);
     }
 

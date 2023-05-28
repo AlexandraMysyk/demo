@@ -82,7 +82,7 @@ function convertStringUserToJson(str) {
 						localStorage.setItem('user', true);
 						localStorage.setItem('admin', false);
 						localStorage.setItem('user', convertStringUserToJson(data));
-						localStorage.setItem('userId', convertStringUserToJson(data).id);
+						localStorage.setItem('userId', JSON.stringify(parseStrToJson(data)));
 						window.location.href = "Texts.html";
 					}
 					else {

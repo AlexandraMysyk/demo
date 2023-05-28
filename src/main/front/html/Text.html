@@ -134,8 +134,33 @@
           // Обробка помилок
         });
     }
+    function addwordToPDB(wordId){
+      axios.post(`http://localhost:8080/api/addWordToDictionary/${JSON.parse(localStorage.getItem("user")).id}/${wordId}`, {
+        "name": localStorage.getItem("m_word"),
+        "meaning": localStorage.getItem("definition"),
+        "translation": localStorage.getItem("translatedText"),
+        "complexityLevel": localStorage.getItem('TextLevel'),
+        "picture": "",
+        "content": content,
+        "id_user": JSON.parse(localStorage.getItem("user")).id,
+        "id_word": wordId
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          console.log('слово успішно додано до персональної бази даних');
+        
+        })
+        .catch(error => {
+          console.log(error);
+          // Обробка помилок
+        });
+    }
     function addWordToDB(text, word) {
       content = findSentencesWithWord(text, word.split('/[.!?]/').toString());
+      // id_word,meaning,name,translation,content
       axios.post(`http://localhost:8080/api/addWord`, {
         "name": localStorage.getItem("m_word"),
         "meaning": localStorage.getItem("definition"),
@@ -143,7 +168,7 @@
         "complexityLevel": localStorage.getItem('TextLevel'),
         "picture": "",
         "content": content,
-        "id_user": localStorage.getItem("id_user"),
+
       }, {
         headers: {
           'Content-Type': 'application/json'
@@ -151,7 +176,10 @@
       })
         .then(response => {
           console.log('слово успішно додано до бази даних');
+          console.log("wordId: "+response.data.id_word);
+          addwordToPDB(response.data.id_word);
           addTaskToDB(content);
+
         })
         .catch(error => {
           console.log(error);
@@ -163,12 +191,18 @@
       return text.replace(regex, '_');
     }
     function addTaskToDB(content) {
+      console.log(localStorage.getItem("userId"));
+      console.log(JSON.parse(localStorage.getItem("user")).id);
       axios.post(`http://localhost:8080/api/addTask`, {
         "taskContent": getTaskContent(content, localStorage.getItem("m_word")),
-        "answer": localStorage.getItem("m_word"),
+        "answer":localStorage.getItem("m_word"),
         "kindOfTask": 2,//insert
         "complexityLevel": localStorage.getItem('TextLevel'),
-        "id_user": localStorage.getItem("id_user"),
+        "id_user": JSON.parse(localStorage.getItem("user")).id,
+        // "taskContent": "content",
+        // "answer": "word",
+        // "kindOfTask": 2,//insert
+        // "complexityLevel": localStorage.getItem('TextLevel'),
       }, {
         headers: {
           'Content-Type': 'application/json'
@@ -181,7 +215,7 @@
             "answer": localStorage.getItem("m_word"),
             "kindOfTask": 1,//flash
             "complexityLevel": localStorage.getItem('TextLevel'),
-            "id_user": localStorage.getItem("id_user"),
+            "id_user": JSON.parse(localStorage.getItem("user")).id,
           }, {
             headers: {
               'Content-Type': 'application/json'
