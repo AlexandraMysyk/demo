@@ -18,7 +18,7 @@ public class Word implements Serializable {
 
     private String translation;
 
-    private byte[] picture;
+    private String picture;
 
     private String content;
     @ManyToMany
@@ -34,7 +34,7 @@ public class Word implements Serializable {
         this.id_word = id_word;
     }
 
-    public Word(int id, String name, String meaning, String translation, byte[] picture, String content) {
+    public Word(int id, String name, String meaning, String translation, String picture, String content) {
         this.id_word = id;
         this.name = name;
         this.meaning = meaning;
@@ -43,7 +43,7 @@ public class Word implements Serializable {
         this.content = content;
     }
 
-    public Word(int id, String name, String meaning, String translation, byte[] picture, String content, List<PersonalDictionary> personalDictionaries) {
+    public Word(int id, String name, String meaning, String translation, String picture, String content, List<PersonalDictionary> personalDictionaries) {
         this.id_word = id;
         this.name = name;
         this.meaning = meaning;
@@ -85,11 +85,11 @@ public class Word implements Serializable {
         this.translation = translation;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
@@ -116,7 +116,7 @@ public class Word implements Serializable {
                 ", name='" + name + '\'' +
                 ", meaning='" + meaning + '\'' +
                 ", translation='" + translation + '\'' +
-                ", picture=" + Arrays.toString(picture) +
+                ", picture=" + picture +
                 ", content='" + content + '\'' +
                 '}';
     }
