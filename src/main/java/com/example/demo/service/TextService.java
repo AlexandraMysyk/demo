@@ -36,7 +36,7 @@ public class TextService {
 
     @Transactional
     public Text updateText(Text text) {
-        return textDao.saveAndFlush(text);
+    return  textDao.update(text.getContent(),text.getName(),text.getComplexityLevel(),text.getId_text());
     }
 //    public void updateRow(Long id, String newValue) {
 //        Optional<YourEntity> optionalEntity = repository.findById(id);

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entities.KindOfTask;
 import com.example.demo.entities.Task;
 import com.example.demo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,20 @@ public class TaskController {
         return new ResponseEntity<>(taskService.getAllByLevel(level,idUser), HttpStatus.OK);
     }
     @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping(path = "/getTasksByKind/{kind}/{user}")
+    public ResponseEntity<List<String>> getTasksByKind(@PathVariable String kind, @PathVariable int idUser) {
+        return new ResponseEntity<>(taskService.getAllByKind(kind,idUser), HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "http://localhost:63342")
+    @GetMapping(path = "/getTasksForUser/{user}")
+    public ResponseEntity<List<String>> getTasksForUser( @PathVariable int idUser) {
+        return new ResponseEntity<>(taskService.getAllByUser(idUser), HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path = "/addTask/", produces = "newtask/json")
     public ResponseEntity<Task> addTask(@RequestBody @PathVariable Task task) {
         return new ResponseEntity<>(taskService.insertTask(task), HttpStatus.CREATED);
     }
+
 }

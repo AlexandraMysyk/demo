@@ -99,13 +99,13 @@
 						axios.post(`http://localhost:8080/api/editText`, {
 							"complexityLevel": level,
 							"content": content,
-							"name": name,
+							"name": name/*,
 							"admin": {
 								"id_admin": adminId,
 								"name": adminName,
 								"password": adminPassword,
 								"email": adminEmail
-							},
+							}*/,
 								headers: {
 									'Content-Type': 'application/json'
 								}

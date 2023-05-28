@@ -9,7 +9,7 @@ public class TaskToUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private int id_task;
+    private int id_tasktouser;
 
     private String content;
 
@@ -22,24 +22,24 @@ public class TaskToUser implements Serializable {
     public TaskToUser() {
     }
 
-    public TaskToUser(int id_task) {
-        this.id_task = id_task;
+    public TaskToUser(int id_tasktouser) {
+        this.id_tasktouser = id_tasktouser;
     }
 
     public TaskToUser(int id, String content, int mark, User user, Task task) {
-        this.id_task = id;
+        this.id_tasktouser = id;
         this.content = content;
         this.mark = mark;
         this.user = user;
         this.task = task;
     }
 
-    public int getId_task() {
-        return id_task;
+    public int getId_tasktouser() {
+        return id_tasktouser;
     }
 
-    public void setId_task(int id) {
-        this.id_task = id;
+    public void setId_tasktouser(int id) {
+        this.id_tasktouser = id;
     }
 
     public String getContent() {
@@ -77,7 +77,7 @@ public class TaskToUser implements Serializable {
     @Override
     public String toString() {
         return "TaskToUser{" +
-                "id=" + id_task +
+                "id=" + id_tasktouser +
                 ", content='" + content + '\'' +
                 ", mark=" + mark +
                 ", user=" + user +

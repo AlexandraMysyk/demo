@@ -21,6 +21,13 @@ public class TaskService {
     public <idUser> List<String> getAllByLevel(String complexityLevel, int idUser) {
         return taskDao.findByLevel(complexityLevel , idUser);
     }
+    public <idUser> List<String> getAllByKind(String kindOfTask, int idUser) {
+        return taskDao.findByKind(kindOfTask , idUser);
+    }
+    public List<String> getAllByUser(int idUser){
+        return taskDao.getAllByUser(idUser);
+    }
+
 
     public Optional<Task> getTaskDao(int id) {
         return taskDao.findById(id);

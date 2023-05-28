@@ -12,8 +12,8 @@ public class KindOfTask implements Serializable {
     @Column(nullable = false, updatable = false)
     private int id_kot;
     private String name;
-    @OneToMany(mappedBy = "kindOfTask")
-    private List<Task> taskOfThisKind;
+//    @OneToMany(mappedBy = "kindOfTask")
+//    private List<Task> taskOfThisKind;
 
 
     public KindOfTask(int id_kot) {
@@ -25,11 +25,11 @@ public class KindOfTask implements Serializable {
         this.name = name;
     }
 
-    public KindOfTask(int id, String name, List<Task> taskOfThisKind) {
-        this.id_kot = id;
-        this.name = name;
-        this.taskOfThisKind = taskOfThisKind;
-    }
+//    public KindOfTask(int id, String name, List<Task> taskOfThisKind) {
+//        this.id_kot = id;
+//        this.name = name;
+//        this.taskOfThisKind = taskOfThisKind;
+//    }
 
     public KindOfTask() {
     }
@@ -50,13 +50,13 @@ public class KindOfTask implements Serializable {
         this.name = name;
     }
 
-    public List<Task> getTaskOfThisKind() {
-        return taskOfThisKind;
-    }
-
-    public void setTaskOfThisKind(List<Task> taskOfThisKind) {
-        this.taskOfThisKind = taskOfThisKind;
-    }
+//    public List<Task> getTaskOfThisKind() {
+//        return taskOfThisKind;
+//    }
+//
+//    public void setTaskOfThisKind(List<Task> taskOfThisKind) {
+//        this.taskOfThisKind = taskOfThisKind;
+//    }
 
     @Override
     public String toString() {

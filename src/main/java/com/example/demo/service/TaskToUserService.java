@@ -23,8 +23,8 @@ public class TaskToUserService {
     }
 
     @Transactional
-    public void insertTaskAnswersList(TaskToUser taskToUser) {
-        taskToUserDao.save(taskToUser);
+    public TaskToUser insertTaskAnswers(TaskToUser taskToUser) {
+        return taskToUserDao.save(taskToUser);
     }
 
     @Transactional
