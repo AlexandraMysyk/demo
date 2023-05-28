@@ -14,6 +14,7 @@ public class Task implements Serializable {
     private int id_task;
 
     private String taskContent;
+    private String name;
 
     private String answer;
 
@@ -45,6 +46,16 @@ public class Task implements Serializable {
         this.mark = mark;
     }
 
+    public Task(int id_task, String taskContent, String name, String answer, String complexityLevel, User id_user, int mark, KindOfTask kindOfTask) {
+        this.id_task = id_task;
+        this.taskContent = taskContent;
+        this.name = name;
+        this.answer = answer;
+        this.complexityLevel = complexityLevel;
+        this.id_user = id_user;
+        this.mark = mark;
+        this.kindOfTask = kindOfTask;
+    }
 
     public int getId_task() {
         return id_task;
@@ -86,6 +97,29 @@ public class Task implements Serializable {
         this.kindOfTask = kindOfTask;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public User getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(User id_user) {
+        this.id_user = id_user;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
 
     @Override
     public String toString() {

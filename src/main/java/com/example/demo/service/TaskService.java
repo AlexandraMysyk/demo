@@ -34,8 +34,8 @@ public class TaskService {
     }
 
     @Transactional
-    public Task insertTask(Task task) {
-        return taskDao.save(task);
+    public Task insertTask(Task task, int idUser) {
+        return taskDao.saveTaskById(task.getId_task(),task.getAnswer(),task.getComplexityLevel(),task.getName(),task.getTaskContent(),(task.getKindOfTask()).getId_kot(),task.getMark(),idUser);
     }
 
     @Transactional
