@@ -49,11 +49,11 @@
   </form>
   <script>
 
-     // import axios from "ajax";
+    // import axios from "ajax";
 
     let texts = "";
 
-    function getTranslation(word) {
+    function getTranslation(word, content) {
       const m_word = word.innerHTML.trim();
       const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${m_word}`;
       const langFrom = 'en';
@@ -61,29 +61,153 @@
       const apiUrl = `https://api.mymemory.translated.net/get?q=${m_word}&langpair=${langFrom}|${langTo}`;
 
       const resultElement = document.getElementById('result');
-
-      fetch(url)
+      var translatedText;
+      var definition;
+      const fetch1 = fetch(url)
         .then(response => response.json())
         .then(data => {
-          const definition = data[0].meanings[0].definitions[0].definition;
-          resultElement.innerHTML = `<h2>Word: ${m_word}</h2><h2>Meaning: ${definition}</h2>`;
+
+          definition = data[0].meanings[0].definitions[0].definition;
+          localStorage.setItem("definition", definition);
+          localStorage.setItem("m_word", m_word);
+          resultElement.innerHTML = `<div id="wordToDict">Word: ${m_word}</div><div id="meaningToDict">Meaning: ${definition}</div>`;
         })
         .catch(() => {
-          resultElement.innerHTML = `<p class="error">Couldn't find the word</p>`;
+          resultElement.innerHTML = `<div id="wordToDict">Word:</div><div id="meaningToDict">Meaning:</div>`;
+          localStorage.setItem("wordToDict", null);
+          localStorage.setItem("meaningToDict", null);
         });
 
       if (!m_word) {
         return;
       }
 
-      fetch(apiUrl)
+      const fetch2 = fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-          const translatedText = data.responseData.translatedText;
-          resultElement.innerHTML += `<h2>Translation: ${translatedText}</h2>`;
+          translatedText = data.responseData.translatedText;
+          localStorage.setItem("translatedText", translatedText);
+          resultElement.innerHTML += `<div id="translationToDict">Translation: ${translatedText}</div>`;
         })
-        .catch(error => console.error(error));
+        .catch(error => { resultElement.innerHTML += `<div id="translationToDict">Translation: </div>`; localStorage.setItem("translatedText", null); });
+      // "id=" + id_word +
+      //         ", name='" + name + '\'' +
+      //         ", meaning='" + meaning + '\'' +
+      //         ", translation='" + translation + '\'' +
+      //         ", picture=" + Arrays.toString(picture) +
+      //         ", content='" + content + '\'' +
+      // console.log(localStorage.getItem("definition"));
+      // console.log(m_word);
+      // console.log( localStorage.getItem("translatedText") );
+      // adminId = 1;
+      // adminName = "alibil";
+      // adminPassword = "user1password";
+      // adminEmail = "alibil@gmail.com";
+      // axios.post(`http://localhost:8080/api/addText`, {
+      //   "name": document.getElementById('translationToDict').values,
+      //   "meaning": "content",
+      //   "translation": "cool",
+      //   "picture": "",
+      //   "content": getContentFromWord(),
+      // }, {
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // })
+      //   .then(response => {
+      //     console.log('Текст успішно додано до бази даних');
+      //   })
+      Promise.all([fetch1, fetch2])
+        .then(responses => {
+          console.log(localStorage.getItem("m_word"));
+          console.log(localStorage.getItem("definition"));
+          console.log(localStorage.getItem("translatedText"));
+
+          co.log(localStorage.getItem(""));
+
+          if (localStorage.getItem("m_word") != null && localStorage.getItem("definition") != null && localStorage.getItem("translatedText") != null) { addWordToDB(content, localStorage.getItem("m_word")); }
+        })
+        .catch(error => {
+          // Обробка помилок
+        });
     }
+    function addWordToDB(text, word) {
+      content = findSentencesWithWord(text, word.split('/[.!?]/').toString());
+      axios.post(`http://localhost:8080/api/addWord`, {
+        "name": localStorage.getItem("m_word"),
+        "meaning": localStorage.getItem("definition"),
+        "translation": localStorage.getItem("translatedText"),
+        "complexityLevel": localStorage.getItem('TextLevel'),
+        "picture": "",
+        "content": content,
+        "id_user": localStorage.getItem("id_user"),
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          console.log('слово успішно додано до бази даних');
+          addTaskToDB(content);
+        })
+    }
+    function getTaskContent(text, word) {
+      var regex = new RegExp(word, 'gi');
+      return text.replace(regex, '_');
+    }
+    function addTaskToDB(content) {
+      axios.post(`http://localhost:8080/api/addTask`, {
+        "taskContent": getTaskContent(content, localStorage.getItem("m_word")),
+        "answer": localStorage.getItem("m_word"),
+        "kindOfTask": 2,//insert
+        "complexityLevel": localStorage.getItem('TextLevel'),
+        "id_user": localStorage.getItem("id_user"),
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          console.log('завдання 2: успішно додано до бази даних');
+          axios.post(`http://localhost:8080/api/addTask`, {
+            "taskContent": localStorage.getItem("definition"),
+            "answer": localStorage.getItem("m_word"),
+            "kindOfTask": 1,//flash
+            "complexityLevel": localStorage.getItem('TextLevel'),
+            "id_user": localStorage.getItem("id_user"),
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+            .then(response => {
+              localStorage.setItem("m_word", null);
+              localStorage.setItem("definition", null);
+              localStorage.setItem("translatedText", null);
+              console.log('завдання 1: успішно додано до бази даних');
+            })
+        })
+    }
+    function findSentencesWithWord(text, word) {
+      // Split the text into sentences using punctuation marks as delimiters
+      var sentences = text.split('/[.!?]/');
+
+      // Array to store matching sentences
+      var matchingSentences = [];
+
+      // Iterate over each sentence
+      for (var i = 0; i < sentences.length; i++) {
+        var sentence = sentences[i].trim();
+
+        // Check if the sentence contains the specified word
+        if (sentence.toLowerCase().includes(word.toLowerCase())) {
+          matchingSentences.push(sentence);
+        }
+      }
+
+      return matchingSentences.toString();
+    }
+
     function getText(id) {
       const resultElement = document.getElementById('result');
       const url = `http://localhost:8080/api/getText/${id}`;
@@ -133,9 +257,10 @@
               }
               word.classList.add('selected');
               selectedWord = word;
-              const translation = getTranslation(word);
+              getTranslation(word, content);
+
               const selectedText = document.createElement('span');
-              selectedText.textContent = translation;
+              selectedText.textContent = localStorage.getItem("translation");
               selectedText.classList.add('selected-text');
               word.parentNode.insertBefore(selectedText, word.nextSibling);
               word.classList.add('selected');
@@ -145,7 +270,9 @@
           });
         })
     }
+    function getContent() {
 
+    }
     function getTextId(texts, name) {
       let wordSpans = [];
       wordSpans = getTextsName(texts);
@@ -190,17 +317,11 @@
       const url = `http://localhost:8080/api/getTextsByLevel/${textLevel}`;
       fetch(url)
         .then(response => {
-          // if (response.ok) {
-          //   return response.text();
-          // } else {
-          //   throw new Error('Error: ' + response.status);
-          // }
         })
         .then(data => {
           if (data != "[]") {
-            // texts = wrapTextItem(data);
-            // data..map(name => `<li><input type="radio" name="text-item">${name} </li>`);
-   console.log(data);
+
+            console.log(data);
           }
           else {
             texts.innerHTML = "";
@@ -209,49 +330,7 @@
         })
     }
     getText(localStorage.getItem('TextId'));
-//     const json = JSON.stringify({ id_text: 98,
-//       complexityLevel: "Intermediate",
-//       content: "098765",
-//       name: "wer"});
-//     const res =  axios.post(`http://localhost:8080/api/addText`, json, {
-//       headers: {
-//         // Overwrite Axios's automatically set Content-Type
-//         'Content-Type': 'application/json'
-//       }
-//     })
-//     .then(response => {
-//       console.log('Текст успішно додано до бази даних');
-//     })
-// console.log(
-//     res
-//     //res.data.headers['Content-Type']
-//     );
-adminId = 1;
-adminName = "alibil";
-adminPassword = "user1password";
-adminEmail = "alibil@gmail.com";
-axios.post(`http://localhost:8080/api/addText`, {
-  "complexityLevel": "Intermediate",
-  "content": "content",
-  "name":"cool",
-  "admin": {
-    "id_admin" : adminId,
-    "name" : adminName,
-    "password" : adminPassword,
-    "email" : adminEmail
-  }
-}, {
-  headers: {
-    'Content-Type': 'application/json'
-  }
-})
-  .then(response => {
-    console.log('Текст успішно додано до бази даних');
-  })
-  // .catch(error => {
-  //   console.error('Помилка при додаванні тексту до бази даних', error);
-  // }
-  // );
+
   </script>
 
 </body>
