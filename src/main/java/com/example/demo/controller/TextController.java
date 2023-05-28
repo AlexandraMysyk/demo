@@ -1,19 +1,13 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.entities.Admin;
 import com.example.demo.entities.Text;
-import com.example.demo.service.AdminService;
 import com.example.demo.service.TextService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.rmi.ServerException;
 import java.util.List;
 
 
@@ -33,49 +27,49 @@ public class TextController {
     public ResponseEntity<List<String>> getTextsById() {
         return new ResponseEntity<>(textService.getTextsDao(), HttpStatus.OK);
     }
+
     @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(path = "/getText/{id}")
     public ResponseEntity<String> getTextById(@PathVariable int id) {
         return new ResponseEntity<>(textService.getTextDao(id), HttpStatus.OK);
     }
+
     @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(path = "/getTextsByLevel/{level}")
     public ResponseEntity<List<String>> getTextsByLevel(@PathVariable String level) {
         return new ResponseEntity<>(textService.getAllByLevel(level), HttpStatus.OK);
     }
+
     @GetMapping(path = "/getTextsByName/{name}")
     public ResponseEntity<String> getTextsByName(@PathVariable String name) {
         return new ResponseEntity<>(textService.getTextsByName(name), HttpStatus.OK);
     }
-    //@CrossOrigin(origins = "http://localhost:63342")
-    @PostMapping( "/addText")
-    public ResponseEntity<Text> addText(@RequestBody Text text) {
-//        -- use StudyHub;
-//insert into admin(id_admin, name, password, email) value(5,'alinochka', 'alinochkapas', 'alinochka@gmail.com');
-//        int id = 5;
-//        AdminService adminService = new AdminService();
-//        adminService.getAdminById(id);
-//        String name= "alinochka";
-//        String password = "alinochkapas";
-//        String email = "alinochka@gmail.com";
-//        Admin a=new Admin(id, name, password, email);
-//        text.setAdmin(a);
 
+    @PostMapping("/addText")
+    public ResponseEntity<Text> addText(@RequestBody Text text) {
         return new ResponseEntity<>(textService.save(text), HttpStatus.OK);
     }
-//
-@CrossOrigin(origins = "http://localhost:63342")
+
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(path = "/editText")
     public ResponseEntity<Text> editText(@RequestBody Text text) {
-        return new ResponseEntity<>(textService.updateText(text),HttpStatus.OK);
+        System.out.println(text.toString());
+        try {
+            textService.updateText(text);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
+
     @CrossOrigin(origins = "http://localhost:63342")
-    @PostMapping(path="/deleteText")
-    public ResponseEntity<Object> deleteText(@RequestBody int id){
+    @PostMapping(path = "/deleteText")
+    public ResponseEntity<Object> deleteText(@RequestBody int id) {
         try {
             textService.deleteTextById(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

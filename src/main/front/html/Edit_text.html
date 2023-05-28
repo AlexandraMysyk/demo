@@ -66,10 +66,6 @@
 		console.log(JSON.parse(localStorage.getItem("jsonText")));
 		fillForm(JSON.parse(localStorage.getItem("jsonText")));
 		function editText() {
-			// @PutMapping(path = "/editText")
-			// public ResponseEntity<String> editText(@RequestBody String content,@RequestBody String name,@RequestBody String level, @RequestBody int id) {
-			//     return new ResponseEntity<>(textService.updateText(content, name, level,id), HttpStatus.OK);
-			// }
 			var adminName;
 			var adminPassword;
 			var adminEmail;
@@ -90,22 +86,17 @@
 						adminEmail = JSON.parse(data).email;
 						adminId = JSON.parse(data).id_admin;
 						data = JSON.parse(localStorage.getItem("jsonText"))
-						id = data.id_text;
-						content = document.getElementById("text").value;
-						name = document.getElementById("text-name").value;
-						level = document.getElementById("text-level").value;
+						idtext = data.id_text;
+						contenttext = document.getElementById("text").value;
+						nametext = document.getElementById("text-name").value;
+						leveltext = document.getElementById("text-level").value;
 						console.log(data);
 
 						axios.post(`http://localhost:8080/api/editText`, {
-							"complexityLevel": level,
-							"content": content,
-							"name": name/*,
-							"admin": {
-								"id_admin": adminId,
-								"name": adminName,
-								"password": adminPassword,
-								"email": adminEmail
-							}*/,
+							"id_text":idtext,
+							"content":contenttext,
+							"name":nametext,
+							"complexityLevel":leveltext,
 								headers: {
 									'Content-Type': 'application/json'
 								}
