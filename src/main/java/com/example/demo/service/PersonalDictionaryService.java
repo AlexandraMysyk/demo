@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.Repositories.PersonalDictionaryDao;
 import com.example.demo.entities.PersonalDictionary;
+import com.example.demo.entities.Word;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

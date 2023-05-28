@@ -26,7 +26,7 @@ public class WordController {
     }
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping( "/addWord")
-    public ResponseEntity<Word> addWord(@RequestBody Word word) {
+    public ResponseEntity<Word> addWord(@RequestBody Word word, @RequestBody int idUser) {
         return new ResponseEntity<>(wordService.save(word), HttpStatus.OK);
     }
 }

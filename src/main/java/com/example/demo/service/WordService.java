@@ -24,9 +24,8 @@ public class WordService {
     }
     @Transactional
     public Word save(Word word) {
-        return wordDao.save(word);
+        return wordDao.saveById(word.getId_word(),word.getMeaning(), word.getName(), word.getTranslation(),word.getContent());
     }
-
     public void deleteWord(Word word) {
         wordDao.delete(word);
     }

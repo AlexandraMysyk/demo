@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.Repositories.TextDao;
+import com.example.demo.entities.Admin;
 import com.example.demo.entities.Text;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,8 @@ public class TextService {
     }
 
     @Transactional
-    public Text updateText(Text text) {
-    return  textDao.update(text.getContent(),text.getName(),text.getComplexityLevel(),text.getId_text());
+    public void updateText(Text text) {
+     textDao.update(text.getContent(),text.getName(),text.getComplexityLevel(), text.getId_text());
     }
 //    public void updateRow(Long id, String newValue) {
 //        Optional<YourEntity> optionalEntity = repository.findById(id);
