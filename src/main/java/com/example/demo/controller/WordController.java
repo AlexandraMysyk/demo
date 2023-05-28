@@ -20,13 +20,14 @@ public class WordController {
         this.wordService = wordService;
     }
     @CrossOrigin(origins = "http://localhost:63342")
-    @GetMapping("/getAllWords/{email}")
-    public ResponseEntity<List<String>> getAllWords(@RequestBody @PathVariable String email){
-        return new ResponseEntity<>(wordService.getAllWordsByEmail(email), HttpStatus.OK);
+    @GetMapping("/getAllWords/{idUser}")
+    public ResponseEntity<List<String>> getAllWords(@RequestBody @PathVariable int idUser){
+        return new ResponseEntity<>(wordService.getAllWordsByUserId(idUser), HttpStatus.OK);
     }
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping( "/addWord")
-    public ResponseEntity<Word> addWord(@RequestBody Word word, @RequestBody int idUser) {
+    public ResponseEntity<Word> addWord(@RequestBody Word word) {
         return new ResponseEntity<>(wordService.save(word), HttpStatus.OK);
     }
+
 }
