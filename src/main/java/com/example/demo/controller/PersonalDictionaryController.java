@@ -19,4 +19,5 @@ private final PersonalDictionaryService personalDictionaryService;
     public PersonalDictionaryController(PersonalDictionaryService personalDictionaryService) {
         this.personalDictionaryService = personalDictionaryService;
     }
+
 }

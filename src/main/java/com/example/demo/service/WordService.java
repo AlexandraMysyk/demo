@@ -17,14 +17,14 @@ public class WordService {
     public WordService(WordDao wordDao) {
         this.wordDao = wordDao;
     }
-    public List<String> getAllWordsByEmail(String email){return wordDao.getAllWordsByEmail(email);}
+    public List<String> getAllWordsByUserId(int idUser){return wordDao.getAllWordsByUserId(idUser);}
 
     public Optional<Word> getWordDao(int id) {
         return wordDao.findById(id);
     }
     @Transactional
     public Word save(Word word) {
-        return wordDao.saveById(word.getId_word(),word.getMeaning(), word.getName(), word.getTranslation(),word.getContent());
+        return wordDao.save(word);
     }
     public void deleteWord(Word word) {
         wordDao.delete(word);
