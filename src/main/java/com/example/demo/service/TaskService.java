@@ -34,7 +34,7 @@ public class TaskService {
     }
 
     @Transactional
-    public Task insertTask(int idUser, int idTask) {
+    public int insertTask(int idUser, int idTask) {
         return taskDao.saveTaskById(idUser , idTask);
     }
 

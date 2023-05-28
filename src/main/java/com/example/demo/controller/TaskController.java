@@ -37,8 +37,8 @@ public class TaskController {
     }
 
     @CrossOrigin(origins = "http://localhost:63342")
-    @PostMapping(path = "/addTask/{idUser}")
-    public ResponseEntity<Task> addTask(@RequestBody @PathVariable Task task, @RequestBody @PathVariable int idUser) {
+    @PostMapping(path = "/addTask")
+    public ResponseEntity<Integer> addTask(@RequestBody Task task, @RequestBody int idUser) {
         taskService.save(task);
         return new ResponseEntity<>(taskService.insertTask(idUser, task.getId_task()), HttpStatus.CREATED);
     }
