@@ -20,6 +20,12 @@
 		</ul>
 	</header>
 	<h1>Edit Text</h1>
+	<div id="select_text" class="popup">
+		<div class="popup-content">
+			<span class="close">&times;</span>
+			<h2>The text has been edited</h2>
+		</div>
+	</div>
 	<form class="form-container">
 		<label for="text-name">Text Name:</label>
 		<input type="text" id="text-name" name="text-name" required minlength="3">
@@ -40,7 +46,7 @@
 
 		<div class="buttons">
 			<button type="submit" id="confirm-btn" onclick="event.preventDefault();editText()">Confirm</button>
-			<button type="button" id="cancel-btn" onclick="fillForm()">Cancel</button>
+			<button type="button" id="cancel-btn" onclick="fillForm(JSON.parse(localStorage.getItem('jsonText')))">Cancel</button>
 			<button type="button" id="go-to-list" onclick="open_list_text()">Return to list</button>
 		</div>
 	</form>
@@ -65,53 +71,38 @@
 		}
 		console.log(JSON.parse(localStorage.getItem("jsonText")));
 		fillForm(JSON.parse(localStorage.getItem("jsonText")));
+		
 		function editText() {
-			var adminName;
-			var adminPassword;
-			var adminEmail;
-			var adminId = localStorage.getItem("adminId");
-			const url = `http://localhost:8080/api/checkAdmin/${adminId}`;
-			fetch(url)
+
+
+			id = findNumberInString(JSON.parse(localStorage.getItem("jsonText")).id_text);
+			content = document.getElementById("text").value;
+			name = document.getElementById("text-name").value;
+			level = document.getElementById("text-level").value;
+			console.log(content);
+
+			axios.post(`http://localhost:8080/api/editText`, {
+				"complexityLevel": level,
+				"content": content,
+				"name": name,
+				"id_text": id,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
 				.then(response => {
-					if (response.ok) {
-						return response.text(); // Отримати текст відповіді
-					} else {
-						throw new Error('Error: ' + response.status);
-					}
+					const popup = document.getElementById("select_text");
+					const close = document.querySelector(".close");
+					popup.style.display = "block";
+					// Закрити popup при натисканні на хрестик
+					close.addEventListener("click", function () {
+						popup.style.display = "none";
+						open_list_text();
+					});
 				})
-				.then(data => {
-					if (data != "[]") {
-						adminName = JSON.parse(data).name;
-						adminPassword = JSON.parse(data).password;
-						adminEmail = JSON.parse(data).email;
-						adminId = JSON.parse(data).id_admin;
-						data = JSON.parse(localStorage.getItem("jsonText"))
-						idtext = data.id_text;
-						contenttext = document.getElementById("text").value;
-						nametext = document.getElementById("text-name").value;
-						leveltext = document.getElementById("text-level").value;
-						console.log(data);
-
-						axios.post(`http://localhost:8080/api/editText`, {
-							"id_text":idtext,
-							"content":contenttext,
-							"name":nametext,
-							"complexityLevel":leveltext,
-								headers: {
-									'Content-Type': 'application/json'
-								}
-							})
-							.then(response => {
-								// clearFieldsAfter();
-							})
-					}
-					else {
-						textList.innerHTML = "";
-					}
-
-				})
-
 		}
+
+
 	</script>
 </body>
 

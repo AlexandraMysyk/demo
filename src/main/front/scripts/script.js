@@ -22,6 +22,20 @@ function clearFields() {
 function addText() {
 
 }
+function findNumberInString(str) {
+  // Використовуємо регулярний вираз для пошуку числа в рядку
+  const regex = /\d+/;
+  
+  // Застосовуємо регулярний вираз до рядка і повертаємо знайдене число (якщо є)
+  const match = str.match(regex);
+  
+  // Перевіряємо, чи знайдено число
+  if (match) {
+    return parseInt(match[0]); // Повертаємо перше знайдене число у вигляді цілого числа
+  } else {
+    return null; // Якщо число не знайдено, повертаємо null
+  }
+}
 function deleteText() {
   data = JSON.parse(localStorage.getItem("jsonTexts"))[getTextIndex()];
   localStorage.setItem("jsonText", JSON.stringify(data));
