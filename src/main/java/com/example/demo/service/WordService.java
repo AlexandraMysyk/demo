@@ -26,6 +26,10 @@ public class WordService {
     public Word save(Word word) {
         return wordDao.save(word);
     }
+    @Transactional
+    public void update(Word word){
+         wordDao.update(word);
+    }
     public void deleteWord(Word word) {
         wordDao.delete(word);
     }

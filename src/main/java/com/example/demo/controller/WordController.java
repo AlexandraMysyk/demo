@@ -28,8 +28,13 @@ public class WordController {
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping( "/addWord")
     public ResponseEntity<Word> addWord(@RequestBody Word word) {
-
         return new ResponseEntity<>(wordService.save(word), HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "http://localhost:63342")
+    @PostMapping( "/updateWord")
+    public ResponseEntity<Object> updateWord(@RequestBody Word word){
+        wordService.update(word);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
