@@ -43,7 +43,7 @@
                 <h3 class="title">word:</h3>
               </td>
               <td>
-                <p class="value">attack</p>
+                <p class="value"></p>
               </td>
             </tr>
             <tr class="full-row hidden">
@@ -51,50 +51,7 @@
                 <h3 class="title">translation:</h3>
               </td>
               <td>
-                <p class="value">напад</p>
-              </td>
-            </tr>
-            <tr class="full-row hidden">
-              <td>
-                <h3 class="title">meaning:</h3>
-              </td>
-              <td>
-                <p class="value">take aggressive military action against (a place or enemy forces) with weapons or armed force.</p>
-              </td>
-            </tr>
-            <tr class="full-row hidden">
-              <td>
-                <h3 class="title">content:</h3>
-              </td>
-              <td>
-                <p class="value">Several months after I graduated from college, my dad had a massive heart attack that should have killed him.</p>
-              </td>
-            </tr>
-            <tr class="full-row hidden">
-              <td colspan="2" class="image-container">
-                <img class="image" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201902/Pulwama_terror_attack_kashmir_AP.jpeg?size=690:388" alt="Image 2">
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <button class="open-button" onclick="toggleDetails(this)">Open</button>
-                <button class="edit-button" onclick="editWord(this)">Edit</button>
-              </td>
-            </tr>
-          </table>
-        </li>
-        <li>
-          <table class="word-item center-table">
-            <tr>
-              <td><h3 class="title">word:</h3></td>
-              <td><p class="value">life</p></td>
-            </tr>
-            <tr class="full-row hidden">
-              <td>
-                <h3 class="title">translation:</h3>
-              </td>
-              <td>
-                <p class="value">життя</p>
+                <p class="value"></p>
               </td>
             </tr>
             <tr class="full-row hidden">
@@ -115,7 +72,7 @@
             </tr>
             <tr class="full-row hidden">
               <td colspan="2" class="image-container">
-                <img class="image" src="https://img.freepik.com/free-photo/lavender-field-at-sunset-near-valensole_268835-3910.jpg" alt="Image 1">
+                <img class="image">
               </td>
             </tr>
             <tr>
@@ -187,6 +144,70 @@ function editWord(button) {
     imageLinkInput.parentNode.replaceChild(newImageElement, imageLinkInput);
   }
 }
- </script>
+
+function fillWordTable() {
+  var wordTable = document.getElementById('wordList');
+  
+  // Очищення таблички перед заповненням
+  wordTable.innerHTML = '';
+  
+  // Загрузка JSON-даних (припустимо, що дані містяться у файлі words.json)
+  fetch(`http://localhost:8080/api/getAllWords/${localStorage.getItem("userId")}`)
+    .then(response => response.json())
+    .then(data => {
+      // Проітерування об'єкта зі словами та додавання їх до таблички
+      for (var i = 0; i < data.words.length; i++) {
+        var word = data.words[i];
+        
+        // Створення нового елементу li
+        var li = document.createElement('li');
+        
+        // Створення копії таблички слов та додавання її до li
+        var table = document.querySelector('.word-item');
+        var tableClone = table.cloneNode(true);
+        li.appendChild(tableClone);
+        
+        // Заповнення полів таблички зі значеннями з JSON-даних
+        tableClone.querySelector('.title').textContent = 'word:';
+        tableClone.querySelector('.value').textContent = word.word;
+        
+        var translationRow = tableClone.querySelector('.full-row:nth-child(2)');
+        translationRow.querySelector('.title').textContent = 'translation:';
+        translationRow.querySelector('.value').textContent = word.translation;
+        
+        var meaningRow = tableClone.querySelector('.full-row:nth-child(3)');
+        meaningRow.querySelector('.title').textContent = 'meaning:';
+        meaningRow.querySelector('.value').textContent = word.meaning;
+        
+        var contentRow = tableClone.querySelector('.full-row:nth-child(4)');
+        contentRow.querySelector('.title').textContent = 'content:';
+        contentRow.querySelector('.value').textContent = word.content;
+        
+        // Додавання кнопок "Open" та "Edit"
+         var buttonRow = tableClone.querySelector('tr:last-child');
+        var openButton = document.createElement('button');
+        openButton.className = 'open-button';
+        openButton.textContent = 'Open';
+        openButton.onclick = toggleDetails;
+        buttonRow.querySelector('td').appendChild(openButton);
+
+        var editButton = document.createElement('button');
+        editButton.className = 'edit-button';
+        editButton.textContent = 'Edit';
+        editButton.onclick = editWord;
+        buttonRow.querySelector('td').appendChild(editButton);
+
+        // Додавання li до таблички
+        wordTable.appendChild(li);
+      }
+    })
+    .catch(error => {
+      console.error('Помилка:', error);
+    });
+}
+
+// Виклик функції для заповнення таблички словами
+fillWordTable();
+</script>
 </body>
 </html>

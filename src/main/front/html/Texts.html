@@ -64,7 +64,7 @@
 
       console.log(localStorage.getItem('TextLevel'));
       const url = `http://localhost:8080/api/getTextsByLevel/${localStorage.getItem('TextLevel')}`;
-      fetch(url)
+      const fetch1 = fetch(url)
         .then(response => {
           if (response.ok) {
             return response.text(); // Отримати текст відповіді
@@ -84,9 +84,12 @@
           // }
 
         })
+        
         if (window.location.href.includes("Texts.html")) {
+          Promise.all([fetch1])
+    .then(responses => {
           window.location.href = "Text.html";
-        }
+        })};
       } else {
         // Показати popup
         const popup = document.getElementById("select_text");
