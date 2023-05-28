@@ -22,6 +22,7 @@
       <li><a class="active" href="Tasks.html">Tasks</a></li>
       <li><a href="Dictionary.html">Personal dictionary</a></li>
       <li><a href="Profile.html">Profile</a></li>
+    </ul>
   </header>
   <h1>Select a Task to complete </h1>
   <form class="filter-row">
@@ -45,6 +46,7 @@
     </ul>
     <div class="buttons">
       <button type="button" id="openTask" onclick="openCurTask()">Open</button>
+    </div>
   </form>
   <script>
 
@@ -137,11 +139,11 @@
       return wordSpans2.join('');
     }
     function getListOfText() {
-      const textLevel = selectElement.options[selectElement.selectedIndex].textContent;
-      localStorage.setItem('TaskLevel', textLevel);
+      const taskLevel = selectElement.options[selectElement.selectedIndex].taskContent;
+      localStorage.setItem('TaskLevel', taskLevel);
 
-      const textList = document.getElementById('task-list');
-      const url = `http://localhost:8080/api/getTasksByLevel/${textLevel}/${localStorage.getItem("userId")}`;
+      const taskList = document.getElementById('task-list');
+      const url = `http://localhost:8080/api/getTasksByLevel/${taskLevel}/${localStorage.getItem("userId")}`;
       fetch(url)
         .then(response => {
           if (response.ok) {
@@ -152,11 +154,11 @@
         })
         .then(data => {
           if (data != "[]") {
-            textList.innerHTML = wrapTextItem(data);
+            taskList.innerHTML = wrapTextItem(data);
 
           }
           else {
-            textList.innerHTML = "";
+            taskList.innerHTML = "";
           }
 
         })

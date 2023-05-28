@@ -21,17 +21,17 @@ public class TaskController {
     }
 
     @CrossOrigin(origins = "http://localhost:63342")
-    @GetMapping(path = "/getTasksByLevel/{level}/{user}")
-    public ResponseEntity<List<String>> getTasksByLevel(@PathVariable String level,@PathVariable int idUser) {
+    @GetMapping(path = "/getTasksByLevel/{level}/{idUser}")
+    public ResponseEntity<List<String>> getTasksByLevel(@RequestBody @PathVariable String level, @RequestBody @PathVariable int idUser) {
         return new ResponseEntity<>(taskService.getAllByLevel(level,idUser), HttpStatus.OK);
     }
     @CrossOrigin(origins = "http://localhost:63342")
-    @GetMapping(path = "/getTasksByKind/{kind}/{user}")
+    @GetMapping(path = "/getTasksByKind/{kind}/{idUser}")
     public ResponseEntity<List<String>> getTasksByKind(@PathVariable String kind, @PathVariable int idUser) {
         return new ResponseEntity<>(taskService.getAllByKind(kind,idUser), HttpStatus.OK);
     }
     @CrossOrigin(origins = "http://localhost:63342")
-    @GetMapping(path = "/getTasksForUser/{user}")
+    @GetMapping(path = "/getTasksForUser/{idUser}")
     public ResponseEntity<List<String>> getTasksForUser( @PathVariable int idUser) {
         return new ResponseEntity<>(taskService.getAllByUser(idUser), HttpStatus.OK);
     }
